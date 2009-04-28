@@ -1,0 +1,25 @@
+---
+title: Agile Icecream
+created_at: 2008-07-03 19:28:32.999449 +01:00
+stub: A new restaurant has recently opened up close to Ominors office. That’s nothing new you might say, since the office is on Chiswick High Road, but this restaurant is a little different.
+filter:
+  - erb
+  - textile
+---
+
+div(created_at). <%= @page.created_at.strftime('%d %B %Y') %>
+
+h1. <%= @page.title %>
+
+<img src="/images/posts/icecream.jpg" alt="icecream" title="Agile Icecream">
+
+A new restaurant has recently opened up close to <a href="http://ominor.com">Ominors</a> office. That’s nothing new you might say, since the office is on Chiswick High Road, but this restaurant is a little different.
+
+Originally the premises had been a knickknacks shop selling season bits and pieces, seasonal tat, some might call it. As soon as Christmas was end their fate was inevitable and were closed by the end of February. Our intrepid restaurateurs started to convert the old shop some time in June and to my amazement opened about a week and a half later. Amazing I thought, how could they have possible have completely overhauled a shop, installed a kitchen and employed a chef in such a small amount of time?
+
+The answer was simple, they hadn't!
+
+On my first visit, they simply had a small ice cream booth at the front of the shop, which was generating a fair amount of attention from some local kids, and a sign saying "Coming Soon" in what would be the dinning area.
+
+To me this is the perfect example of Agile in action. BLAH have delivered business value by doing the simplest thing that works and are, most importantly, making money.
+

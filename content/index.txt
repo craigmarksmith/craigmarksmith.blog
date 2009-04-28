@@ -1,0 +1,20 @@
+---
+title: Home
+extension: html
+layout: default
+dirty: true
+filter:
+  - erb
+  - textile
+---
+
+<%
+posts = @pages.find(:limit => :all,
+                    :draft => nil,
+                    :in_directory => 'posts',
+                    :sort_by => 'created_at').reverse
+%>
+
+<% paginate(posts, 5) do |page| -%>
+  <div class="post"><%= Renderer.new(page).render_page %></div>
+<% end -%>
