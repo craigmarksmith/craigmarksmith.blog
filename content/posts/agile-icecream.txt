@@ -1,15 +1,12 @@
 ---
 title: Agile Icecream
 created_at: 2008-07-03 19:28:32.999449 +01:00
-stub: A new restaurant has recently opened up close to Ominors office. That’s nothing new you might say, since the office is on Chiswick High Road, but this restaurant is a little different.
 filter:
   - erb
   - textile
 ---
 
-div(created_at). <%= @page.created_at.strftime('%d %B %Y') %>
-
-h1. <%= @page.title %>
+<%= render(:partial => '/post_title')%>
 
 <img src="/images/posts/icecream.jpg" alt="icecream" title="Agile Icecream">
 
