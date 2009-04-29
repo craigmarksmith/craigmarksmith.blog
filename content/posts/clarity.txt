@@ -11,7 +11,7 @@ I love that feeling, the one where you've done something for years, known it was
 
 That 'clarity' has happened to me many times during my professional career but a fairly important one happened just a few weeks ago.
 
-I've been rewriting my main website (www.themoves.co.uk) on and off for around 4 years now. As soon as I finish a version I almost immediately start the next. The functionality over the years hasn't changed but under the hood, the code is getting smarter, cleaner, faster and maybe one of these days I might even be confident enough to show it to someone.
+I've been rewriting my main website ("themoves":http://www.themoves.co.uk) on and off for around 4 years now. As soon as I finish a version I almost immediately start the next. The functionality over the years hasn't changed but under the hood, the code is getting smarter, cleaner, faster and maybe one of these days I might even be confident enough to show it to someone.
 It's during this fourth rewrite that I had my most recent 'attack' of 'clarity'. The difference with this version is that it's test driven (TDD).
 
 I've always understood and trusted the reasons for automated testing and TDD:
