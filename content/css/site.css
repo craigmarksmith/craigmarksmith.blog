@@ -32,6 +32,10 @@ a                 { color: <%= @page.color['purple'] %>; }
 a:hover           { color: <%= @page.color['link-hover'] %>; }
 blockquote        { color: <%= @page.color['blockquote'] %>; }
 
+div.code {
+  font-size:9px;
+}
+
 div#header img{
   padding-left:93px;
 }
@@ -58,7 +62,7 @@ div#content .post h1{
   color: <%= @page.color['purple'] %>;
 }
 
-div#content .post p{
+div#content .post {
   font-size:13px;
 }
 

@@ -1,0 +1,82 @@
+---
+title:      A first look at Python
+created_at: 2007-09-20 20:46:39.991444 +01:00
+filter:
+  - erb
+  - textile
+---
+
+<%= render(:partial => '/post_title')%>
+
+Around a year ago I read the O'Reilly 'Learning Python' book and since then I've been looking for a quick, interesting and easy challenge to put it to use.
+
+Around two years ago a friend bought me a copy of "The Code Book - the secret history of codes and code-breaking" by Simon Singh. At the time I thought "cheers, that looks dull", but as usual I was completely wrong. It's probably one of the most interesting books I've ever read. Even better than Alex James autobiography and everyone knows I love that since for about 3 months all I talked about was carrots and 120bpm.
+
+Anyway, The Code Book introduced me to the Vigenere Cipher, a method that uses a key phrase to encrypt any plain text. This encryption method seemed like a great opportunity to put together a little code that takes a key phrase and some plain text and encrypts one with the other.
+
+Heres my attempt.
+
+The unit test:
+
+<div class="code">
+<pre>
+import unittest;
+from CypherMachine import *;
+
+class CypherMachineTest(unittest.TestCase):
+
+  def test_encrypt(self):
+    test_string     = 'thisisateststring';
+    expected_result = 'clabmkjxwbxkcvawk';
+
+    machine = CypherMachine();
+    encrypted_string = machine.encrypt('jes',test_string);
+
+    assert encrypted_string == expected_result
+
+
+if __name__ == "__main__":
+  unittest.main();
+</pre>
+</div>
+
+The implementation:
+
+<div class="code">
+<pre>
+class CypherMachine:
+  def encrypt(self,key,plain_text):
+    encrypted_text = ''
+
+    position = 0
+    while position < len(plain_text):
+      for key_letter in key:
+        if position == len(plain_text):
+          break
+        encrypted_text = encrypted_text + self.encryptLetter(key_letter,plain_text[position])
+        position = position + 1
+
+    return encrypted_text
+
+  def encryptLetter(self,key_letter,plain_letter):
+
+    key_position = ord(key_letter)
+    plain_letter_position = ord(plain_letter)
+
+    #96 being the number to bring lower case letters to there position in the alphabet
+    #-1 since the cyper square starts with b
+    key_alphabet_position = ord(key_letter) - 96 - 1
+
+    encrypted_position = plain_letter_position + key_alphabet_position
+
+    if encrypted_position > ord('z'):
+      encrypted_position = encrypted_position - 26
+
+    encrypted_letter = chr(encrypted_position)
+    return encrypted_letter
+</pre>
+</div>
+
+I know it's not as neat or as simple as it should be but for an hours work I'm pretty happy with it. I love that fact that in Python you don't waste time typing inconsequential characters like '{' and ';'. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I'd written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they're both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it's just so easy. Import the unittest modules and get on with it. Perfect!
+
+Maybe if testing in PHP was this easy I'd get fewer dirty looks when I tell people I'm a PHP developer.

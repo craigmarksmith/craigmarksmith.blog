@@ -1,0 +1,34 @@
+---
+title:      Clarity
+created_at: 2007-10-13 22:44:36.204285 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+I love that feeling, the one where you've done something for years, known it was the right thing to do but never been able to prove it, until that moment. You've just taken the word of others and trusted their experience and then, suddenly, it all makes sense and you know you where right to follow your instincts and place your trust in that person.
+
+That 'clarity' has happened to me many times during my professional career but a fairly important one happened just a few weeks ago.
+
+I've been rewriting my main website (www.themoves.co.uk) on and off for around 4 years now. As soon as I finish a version I almost immediately start the next. The functionality over the years hasn't changed but under the hood, the code is getting smarter, cleaner, faster and maybe one of these days I might even be confident enough to show it to someone.
+It's during this fourth rewrite that I had my most recent 'attack' of 'clarity'. The difference with this version is that it's test driven (TDD).
+
+I've always understood and trusted the reasons for automated testing and TDD:
+
+* Code confidence
+* Good test == good code
+* Tests == documentation
+* You only write what you need
+* Helps break your code into smaller deliverables
+
+Up until now (well, a fair while ago but now being the moment of 'clarity'), reason 4 was lost on me. Surely I only write the code that I need. I'm not the sort of guy who over engines, I'm way too lazy for that. I write the bare minimum so my app does what I need then forget it. I've got way too much climbing to do to waste my time doing anything I don't need to. This rule doesn't apply to me!!!
+
+WRONG!
+
+Themoves3, the current live version of the site was, in my eyes, a disaster. It look ages to write and didn't do anything that themoves2 didn't. It's almost exactly the same except some variables have been moved around and some methods have been moved into their own objects. Most professionals call this a Refactor but I had to rewrite because I had no code confidence. It was a total disaster because themoves3 also didn't have any test, hens, themoves4 was born.
+
+The clarity came when I was writing the Configuration class, a simple object that allows me to access configuration options such as DB user name, passwords etc. I found that, when I was reimplementing this class, the code I was writing was cleaner and I was writing less of it. In fact, the new class was 25% shorter. The reason was simple. By writing tests I'd been forced to think about exactly what I wanted before starting to code. I wasn't coding and thinking and inventing all at the same time, so by breaking up the requirements into test I got exactly what I wanted, not what I thought I wanted.
+
+So, if you're reading this and not writing test for your current app then STOP and start writing some. If you don't see why at the moment please, TRUST me, you'll be glad you did.
+
