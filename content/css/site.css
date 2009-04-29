@@ -43,6 +43,11 @@ div#content {
   padding:10px 100px;
 }
 
+div#content .post {
+  margin-bottom: 20px;
+  border-bottom: 1px solid <%= @page.color['light-green'] %>;
+}
+
 div#content .post .created_at{
   font-size:10px;
   color: #999;
