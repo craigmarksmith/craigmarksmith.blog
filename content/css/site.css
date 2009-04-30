@@ -24,13 +24,26 @@ body {
 
 /* Headings
  * --------------------------------------------------------------------- */
-h1,h2,h3,h4,h5,h6 { color: <%= @page.color['header'] %>; }
+h1,h2,h3,h4,h5,h6 {
+  font-size:20px;
+  color: <%= @page.color['purple'] %>;
+}
+
+h3{
+  font-size:16px;
+  padding:0;
+  margin:0;
+}
 
 /* Text Elements
  * --------------------------------------------------------------------- */
 a                 { color: <%= @page.color['purple'] %>; }
 a:hover           { color: <%= @page.color['link-hover'] %>; }
 blockquote        { color: <%= @page.color['blockquote'] %>; }
+
+p {
+  font-size: 13px;
+}
 
 div.code {
   font-size:9px;
@@ -57,11 +70,6 @@ div#content .post .created_at{
   color: #999;
 }
 
-div#content .post h1{
-  font-size:20px;
-  color: <%= @page.color['purple'] %>;
-}
-
 div#content .post {
   font-size:13px;
 }
@@ -77,9 +85,21 @@ div#content .post img{
 div#sideBar {
   float:left;
   padding:10px;
+  margin-left:30px;
+  width:200px;
+}
+
+div#sideBar ul{
+  margin:0;
+  padding:0;
+  list-style-position:inside;
 }
 
 div#sideBar li{
   font-size:12px;
+}
+
+img#gravitar {
+  border: 1px solid <%= @page.color['light-green'] %>;
 }
 

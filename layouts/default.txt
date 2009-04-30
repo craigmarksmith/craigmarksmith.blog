@@ -8,7 +8,7 @@ filter:    erb
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-   <title><%= @page.title %></title>
+   <title>craigmarksmith.blog</title>
    <meta name="author" content="<%= @page.author %>" />
 
    <!-- Homepage CSS -->
@@ -22,7 +22,11 @@ filter:    erb
   </div>
   <div id="content"><%= @content %></div>
   <div id="sideBar">
-    <img src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest('craigmarksmith@gmail.com') %>.jpg" />
+    <h3>About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest('craigmarksmith@gmail.com') %>.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
       <li><a href="http://github.com/craigmarksmith">Github</a></li>
