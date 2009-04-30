@@ -33,6 +33,7 @@ h3{
   font-size:16px;
   padding:0;
   margin:0;
+  margin-top:20px;
 }
 
 /* Text Elements
@@ -43,6 +44,10 @@ blockquote        { color: <%= @page.color['blockquote'] %>; }
 
 p {
   font-size: 13px;
+}
+
+h3#aboutMe {
+  margin:0;
 }
 
 div.code {
@@ -65,7 +70,7 @@ div#content .post {
   border-bottom: 1px solid <%= @page.color['light-green'] %>;
 }
 
-div#content .post .created_at{
+div#content .created_at{
   font-size:10px;
   color: #999;
 }

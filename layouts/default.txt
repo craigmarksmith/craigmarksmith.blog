@@ -22,7 +22,7 @@ filter:    erb
   </div>
   <div id="content"><%= @content %></div>
   <div id="sideBar">
-    <h3>About me:</h3>
+    <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest('craigmarksmith@gmail.com') %>.jpg" />
     <p>
       I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
@@ -30,6 +30,28 @@ filter:    erb
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
       <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      <%
+      posts = @pages.find(:limit => :all,
+                          :draft => nil,
+                          :in_directory => 'posts',
+                          :sort_by => 'created_at').reverse
+      %>
+
+      <% posts.each do |page| -%>
+        <li><%= link_to_page(page) %></li>
+      <% end -%>
+    </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
     </ul>
   </div>
 </body>
