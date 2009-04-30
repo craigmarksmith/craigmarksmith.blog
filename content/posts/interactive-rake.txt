@@ -1,0 +1,27 @@
+---
+title:      Interactive Rake
+created_at: 2009-04-30 19:49:14.724442 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+I often find myself using @rake -T@. I always have a vague idea of the name of the Rake task I'd like to run but often tasks with long names slip my mind. I'm also incredibly lazy and don't want to type the entire name of the task if I don't have to.
+That's why I decided I needed Interactive Rake. The ability to search though my tasks and then choose the one I'd like to run from a list.
+
+For example, to search your tasks for the name "create", then run @rake tmp:create@
+
+<div class="code">
+<pre>
+craig:themoves.co.uk craig$ rake -i create
+(in /Users/craig/rails_sites/themoves.co.uk)
+0) rake db:create           # Create the database defined in config/database.yml for the current RAILS_ENV
+1) rake db:create:all       # Create all the local databases defined in config/database.yml
+2) rake db:sessions:create  # Creates a sessions migration for use with ActiveRecord::SessionStore
+3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
+Choose a task: 3
+</pre>
+</div>
+
+Sadly Jim Weirich is being elusive so I'm having trouble getting my fork merged back in to the trunk. If you'd like to use Interactive Rake it's hosted at "github.com/craigmarksmith/rake":http://github.com/craigmarksmith/rake
