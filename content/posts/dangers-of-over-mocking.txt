@@ -7,7 +7,7 @@ filter:
 ---
 <%= render(:partial => '/post_title')%>
 
-Classicist vs Mockist approach to TDD is a classic and ongoing debate in the software community. If you're unfamiliar with this phrase then you kind find out about it "here":http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting
+"Classicist vs Mockist":http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting approach to "TDD":http://en.wikipedia.org/wiki/Test-driven_development is a classic and ongoing debate in the software community.
 
 I've long been a classicist but I started out my career as a mockist.
 
