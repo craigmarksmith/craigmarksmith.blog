@@ -9,7 +9,6 @@ filter:    erb
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
    <title>craigmarksmith.blog</title>
-   <meta name="author" content="<%= @page.author %>" />
 
    <!-- Homepage CSS -->
    <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
@@ -18,7 +17,7 @@ filter:    erb
 
 <div class="container">
   <div id="header">
-    <img src="/images/craigmarksmith_blog.png" />
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
   </div>
   <div id="content"><%= @content %></div>
   <div id="sideBar">
