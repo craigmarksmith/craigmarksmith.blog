@@ -1,0 +1,51 @@
+---
+title:      The dangers of over mocking
+created_at: 2009-05-05 17:41:18.315310 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+Classicist vs Mockist approach to TDD is a classic and ongoing debate in the software community. If you're unfamiliar with this phrase then you kind find out about it "here":http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting
+
+I've long been a classicist but I started out my career as a mockist.
+
+Recently I came up against a particularly poignant example of the drawbacks of heavy mocking and wanted to share the experience.
+
+h3. The Mockists solution
+
+<div class="code">
+<pre>
+class ProductControllerTest
+  def test_should_show_price
+    Product.stubs(:find_by_product_code).return(stub(:price => 12.50))
+    
+    get :show, :product_code => 'IPOD'
+    assert_select '.price', '12.50'
+  end
+end
+</pre>
+</div>
+
+In the test above we want to make sure that the controller shows the price on the product page. We don't want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.
+
+Six month later another developer is refactoring. Everyone is the whole business calls product_codes SKUs, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won't fail, even though the column is gone leaving us with a meaningless test and broken code :(
+
+h3. The Classicists solution
+
+<div class="code">
+<pre>
+class ProductControllerTest
+  def test_should_show_price
+    product = Factory(:product, :price => 12.50, :product_code => 'IPOD')
+    
+    get :show, :product_code => 'IPOD'
+    assert_select '.price', '12.50'
+  end
+end
+</pre>
+</div>
+
+Using something like "Factory Girl":http://thoughtbot.com/projects/factory_girl instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.
+

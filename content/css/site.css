@@ -46,6 +46,18 @@ p {
   font-size: 13px;
 }
 
+a img {
+  border:0;
+}
+
+.container {
+  width:1000px;
+}
+
+h3{
+  font-size:14px;
+}
+
 h3#aboutMe {
   margin:0;
 }
@@ -61,7 +73,7 @@ div#header img{
 div#content {
   float:left;
   border-right:1px solid <%= @page.color['light-green'] %>;
-  width:450px;
+  width:500px;
   padding:10px 100px;
 }
 
