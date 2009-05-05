@@ -30,7 +30,7 @@ end
 
 In the test above we want to make sure that the controller shows the price on the product page. We don't want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.
 
-Six month later another developer is refactoring. Everyone is the whole business calls product_codes SKUs, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won't fail, even though the column is gone leaving us with a meaningless test and broken code :(
+Six month later another developer is refactoring. Everyone in the whole business calls product_codes SKUs, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won't fail, even though the column is gone leaving us with a meaningless test and broken code :(
 
 h3. The Classicists solution
 
