@@ -1,0 +1,98 @@
+---
+title: Factory Girl for the win
+created_at: 2009-05-07 07:51:24.814382 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+In my last post I talked about testing and in this post I'd like to continue that theme.
+
+As a classicist I like to create actual objects when I test. I find it makes my tests easier to write, shorter and more readable, but creating valid objects can be a messy business.
+
+<div class="code">
+<pre>
+class ProductControllerTest < ActionController::TestCase
+  def test_should_show_price
+    product = Product.create!(
+                  :name => 'Dragons',
+                  :brand => '5/10',
+                  :sku => 'ABC',
+                  :ean => '510DRAG',
+                  :price => '75.00')
+    
+    get :show, :sku => 'ABC'
+    assert_select '.price', '12.50'
+  end
+end
+</pre>
+</div>
+
+In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don't need to do it in this clunky, verbose way. Enter the "Object Mother":http://martinfowler.com/bliki/ObjectMother.html
+
+Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.
+
+<div class="code">
+<pre>
+class Mother
+  def self.create_product(attributes = {})
+    Product.create!({
+      :name => 'Product',
+      :brand => 'Brand Name',
+      :sku => 'SKU',
+      :ean => 'EAN',
+      :price => 10.00}.merge(attributes))
+  end
+end
+  
+class ProductControllerTest < ActionController::TestCase
+  def test_should_show_price
+    product = Mother.create_product({:price => 75.00, :sku => 'ABC'})
+    
+    get :show, :sku => 'ABC'
+    assert_select '.price', '75.00'
+  end
+end
+</pre>
+</div>
+
+Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that's not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs. 
+
+Option 1) Pass the unique parts into the Mother - _but that'll pollute the test with irrelevant data again._
+Option 2) Modify the Mother to dynamically create values for all the unique attributes
+Option 3) Use something that already does Option 2 and a whole load of other things
+
+Enter "Factory Girl":http://thoughtbot.com/projects/factory_girl
+
+<div class="code">
+<pre>
+#tests/factories.rb
+Factory.sequence :sku do |n|
+  "SKU#{n}"
+end
+Factory.sequence :ean do |n|
+  "EAN#{n}"
+end
+Factory.define :product do |p|
+  p.name "Product"
+  p.brand "Brand"
+  p.price 12.50
+  p.sku{ Factory.next :sku } #dynamically set the sku
+  p.ean{ Factory.next :ean } #dynamically set the ean
+end
+
+#controller test
+class ProductControllerTest < ActionController::TestCase
+  def test_should_show_price
+    product = Factory(:product, :price => 75.00, :sku => 'ABC')
+    
+    get :show, :sku => 'ABC'
+    assert_select '.price', '75.00'
+  end
+end
+</pre>
+</div>
+
+Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.
+
