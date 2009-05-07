@@ -1,5 +1,5 @@
 ---
-title:      Clarity
+title: Clarity
 created_at: 2007-10-13 22:44:36.204285 +01:00
 filter:
   - erb
