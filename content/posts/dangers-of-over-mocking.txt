@@ -19,7 +19,7 @@ h3. The Mockists solution
 <pre>
 class ProductControllerTest
   def test_should_show_price
-    Product.stubs(:find_by_product_code).return(stub(:price => 12.50))
+    Product.stubs(:find_by_product_code).returns(stub(:price => 12.50))
     
     get :show, :product_code => 'IPOD'
     assert_select '.price', '12.50'
@@ -30,7 +30,7 @@ end
 
 In the test above we want to make sure that the controller shows the price on the product page. We don't want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.
 
-Six month later another developer is refactoring. Everyone in the whole business calls product_codes SKUs, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won't fail, even though the column is gone leaving us with a meaningless test and broken code :(
+Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won't fail, even though the column is gone leaving us with a meaningless test and broken code :(
 
 h3. The Classicists solution
 
@@ -38,7 +38,7 @@ h3. The Classicists solution
 <pre>
 class ProductControllerTest
   def test_should_show_price
-    product = Factory(:product, :price => 12.50, :product_code => 'IPOD')
+    product = Product.create!(:price => 12.50, :product_code => 'IPOD')
     
     get :show, :product_code => 'IPOD'
     assert_select '.price', '12.50'
@@ -47,5 +47,4 @@ end
 </pre>
 </div>
 
-Using something like "Factory Girl":http://thoughtbot.com/projects/factory_girl instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.
-
+Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.
