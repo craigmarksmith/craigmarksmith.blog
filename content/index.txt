@@ -14,6 +14,6 @@ posts = @pages.find(:limit => :all,
                     :sort_by => 'created_at').reverse
 %>
 
-<% posts.first(4).each do |page| -%>
+<% posts.each do |page| -%>
   <div class="post"><%= render(page) %></div>
 <% end -%>
