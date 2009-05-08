@@ -18,8 +18,7 @@ Heres my attempt.
 
 The unit test:
 
-<div class="code">
-<pre>
+<% coderay( :lang => "python", :line_numbers => "inline" ) do -%>
 import unittest;
 from CypherMachine import *;
 
@@ -37,13 +36,11 @@ class CypherMachineTest(unittest.TestCase):
 
 if __name__ == "__main__":
   unittest.main();
-</pre>
-</div>
+<% end %>
 
 The implementation:
 
-<div class="code">
-<pre>
+<% coderay( :lang => "python", :line_numbers => "inline" ) do -%>
 class CypherMachine:
   def encrypt(self,key,plain_text):
     encrypted_text = ''
@@ -74,8 +71,7 @@ class CypherMachine:
 
     encrypted_letter = chr(encrypted_position)
     return encrypted_letter
-</pre>
-</div>
+<% end %>
 
 I know it's not as neat or as simple as it should be but for an hours work I'm pretty happy with it. I love that fact that in Python you don't waste time typing inconsequential characters like '{' and ';'. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I'd written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they're both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it's just so easy. Import the unittest modules and get on with it. Perfect!
 

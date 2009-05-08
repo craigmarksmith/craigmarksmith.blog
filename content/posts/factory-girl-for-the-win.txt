@@ -11,8 +11,7 @@ In my last post I talked about testing and in this post I'd like to continue tha
 
 As a classicist I like to create actual objects when I test. I find it makes my tests easier to write, shorter and more readable, but creating valid objects can be a messy business.
 
-<div class="code">
-<pre>
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
 class ProductControllerTest < ActionController::TestCase
   def test_should_show_price
     product = Product.create!(
@@ -26,15 +25,14 @@ class ProductControllerTest < ActionController::TestCase
     assert_select '.price', '12.50'
   end
 end
-</pre>
-</div>
+<% end -%>
+
 
 In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don't need to do it in this clunky, verbose way. Enter the "Object Mother":http://martinfowler.com/bliki/ObjectMother.html
 
 Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.
 
-<div class="code">
-<pre>
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
 class Mother
   def self.create_product(attributes = {})
     Product.create!({
@@ -54,8 +52,7 @@ class ProductControllerTest < ActionController::TestCase
     assert_select '.price', '75.00'
   end
 end
-</pre>
-</div>
+<% end -%>
 
 Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that's not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs. 
 
@@ -65,8 +62,7 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 
 Enter "Factory Girl":http://thoughtbot.com/projects/factory_girl
 
-<div class="code">
-<pre>
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
 #tests/factories.rb
 Factory.sequence :sku do |n|
   "SKU#{n}"
@@ -91,8 +87,7 @@ class ProductControllerTest < ActionController::TestCase
     assert_select '.price', '75.00'
   end
 end
-</pre>
-</div>
+<% end -%>
 
 Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.
 

@@ -15,8 +15,7 @@ Recently I came up against a particularly poignant example of the drawbacks of h
 
 h3. The Mockists solution
 
-<div class="code">
-<pre>
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
 class ProductControllerTest
   def test_should_show_price
     Product.stubs(:find_by_product_code).returns(stub(:price => 12.50))
@@ -25,8 +24,7 @@ class ProductControllerTest
     assert_select '.price', '12.50'
   end
 end
-</pre>
-</div>
+<% end %>
 
 In the test above we want to make sure that the controller shows the price on the product page. We don't want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.
 
@@ -34,8 +32,7 @@ Six month later another developer is refactoring. Everyone in the whole business
 
 h3. The Classicists solution
 
-<div class="code">
-<pre>
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
 class ProductControllerTest
   def test_should_show_price
     product = Product.create!(:price => 12.50, :product_code => 'IPOD')
@@ -44,7 +41,6 @@ class ProductControllerTest
     assert_select '.price', '12.50'
   end
 end
-</pre>
-</div>
+<% end %>
 
 Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.

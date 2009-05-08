@@ -12,8 +12,7 @@ That's why I decided I needed Interactive Rake. The ability to search though my 
 
 For example, to search your tasks for the name "create", then run @rake tmp:create@
 
-<div class="code">
-<pre>
+<% coderay( :lang => "bash", :line_numbers => "inline" ) do -%>
 craig:themoves.co.uk craig$ rake -i create
 (in /Users/craig/rails_sites/themoves.co.uk)
 0) rake db:create           # Create the database defined in config/database.yml for the current RAILS_ENV
@@ -21,7 +20,6 @@ craig:themoves.co.uk craig$ rake -i create
 2) rake db:sessions:create  # Creates a sessions migration for use with ActiveRecord::SessionStore
 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
 Choose a task: 3
-</pre>
-</div>
+<% end %>
 
 Sadly Jim Weirich is being elusive so I'm having trouble getting my fork merged back in to the trunk. If you'd like to use Interactive Rake it's hosted at "github.com/craigmarksmith/rake":http://github.com/craigmarksmith/rake
