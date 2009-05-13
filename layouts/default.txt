@@ -13,6 +13,7 @@ filter:    erb
    <!-- Homepage CSS -->
    <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
    <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
 </head>
 <body>
 
