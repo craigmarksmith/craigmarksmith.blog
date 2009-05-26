@@ -1,0 +1,16 @@
+---
+title:      The problem with TDD
+created_at: 2009-05-26 19:48:57.770667 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+Some times it's hard to write tests before code. It's easy when you have a clear understanding of the domain, what the client wants to achieve and the API's you'll use to do the job but it's pretty much impossible to write a good test if you don't have a good understanding of how to get the job done.
+
+One possible solution to this is something I've started referring to as "Chris Roos":http://chrisroos.co.uk/ Test Driven Development.
+
+Given a problem or feature you're unfamiliar with, a great first step is to prototype the solution. Pick the primary success criteria and hack at the system until you have it doing what you think it should. Don't consider any edge cases and don't write any tests, just make it do the simplest, dirtiest thing possible. Once you have a clear understanding of the code and the problem, REVERT! This is really important. Don't be tempted to retrofit tests on top of your hack, that'll result in bad testing and messy code. Take what you've learnt and start a fresh. This time write tests and consider edge cases. You'll work much more quickly with an understanding of the system and you're code, tests and overall solution will reap the benefit.
+
+While working with Chris at "Reevoo":http://reevoo.com he often used this method which always resulted in clear, concise code and tests, which is why I've attributed it to him.
