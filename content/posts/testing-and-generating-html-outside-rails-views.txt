@@ -1,0 +1,58 @@
+---
+title:      Testing and generating HTML outside Rails views
+created_at: 2009-05-28 18:57:43.356491 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+At "Reevoo":http://reevoo.com we have cause to generate HTML snippets that are written to files rather than served up by a controller. It's a pretty non-standard thing to do so I thought I'd share our methods (and if there's a better way maybe someone will tell me).
+
+First let's look at the test:
+
+(If you're not familiar with Factory or should, take a look at "Factory Girl":http://thoughtbot.com/projects/factory_girl and "Shoulda":http://thoughtbot.com/projects/shoulda/)
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+
+class WidgetHTMLGeneratorTest < ActiveSupport::TestCase
+
+  include ActionController::Assertions::SelectorAssertions
+
+  should "include the product name" do
+    product = Factory(:product)
+    html = WidgetHTMLGenerator.generate(product)
+    assert_select HTML::Document.new(html).root, "div#product_name", product.name
+  end
+
+end
+
+<% end -%>
+
+Because we're passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that's really important to us.
+
+Now the implementation:
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+
+class WidgetHTMLGenerator
+
+  def self.generate(product)
+    @product = product
+    file_contents = File.read(File.join(Rails.root,'app','views','widget_html_generator','test.html.erb'))
+    erb = ERB.new(file_contents)
+    erb.result(binding)
+  end
+
+end
+
+<% end -%>
+
+and the erb file:
+
+<% coderay( :lang => "erb", :line_numbers => "inline" ) do -%>
+
+<div id='problem_name'><%%= @product.name %></div>
+
+<% end -%>
+
