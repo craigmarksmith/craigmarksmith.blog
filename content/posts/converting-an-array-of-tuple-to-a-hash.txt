@@ -1,0 +1,32 @@
+---
+title:      Converting an array of tuples to a hash
+created_at: 2009-06-23 22:02:38.218576 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+I was working with a class today that gave me an array of tuples:
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+person = [['name','craig'],['likes','climbing']]
+<% end -%>
+
+I want to use this data to create an object so my code would be much prettier if I had a hash.
+
+I thought converting this array of tuples to a hash would be messy but it's not. You can create a hash from an array like so.
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+>> Hash['name','craig','likes','climbing']
+=> {"name"=>"craig", "likes"=>"climbing"}
+<% end -%>
+
+Now that we know that, we can create a hash from an array of tuples.
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+>> tuples = [['name','craig'],['likes','climbing']]
+=> [["name", "craig"], ["likes", "climbing"]]
+>> Hash[*tuples.flatten]
+=> {"name"=>"craig", "likes"=>"climbing"}
+<% end -%>
