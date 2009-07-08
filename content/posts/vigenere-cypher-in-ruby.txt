@@ -1,0 +1,89 @@
+---
+title:      Vigenere cypher in ruby
+created_at: 2009-07-01 12:31:31.254110 +01:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+Some time ago I implemented the "Vigenere":http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher as a first look at Python. For some time I've wanted to do the same thing in Ruby and I finally found time.
+
+The tests:
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+require 'test/unit'
+require 'vigenere_cipher'
+
+class VigenereCipherTest < Test::Unit::TestCase
+
+  def test_should_encrypt_a_string
+    plain_text = 'ATTACKATDAWN';
+    expected_result = 'LXFOPVEFRNHR';
+
+    machine = VigenereCipher.new;
+    encrypted_string = machine.encrypt('LEMONLEMONLE',plain_text);
+
+    assert_equal expected_result, encrypted_string
+  end
+
+  def test_should_decrypt_a_string
+    expected_result = 'ATTACKATDAWN';
+    encrypted_message = 'LXFOPVEFRNHR';
+
+    machine = VigenereCipher.new;
+    encrypted_message = machine.decrypt('LEMONLEMONLE',encrypted_message);
+
+    assert_equal expected_result, encrypted_message
+  end
+
+  def test_should_loop_around_the_key_when_it_is_short_than_the_text
+    plain_text = 'ATTACKATDAWN';
+    expected_result = 'JXLSLOSLMEOF';
+
+    machine = VigenereCipher.new;
+    encrypted_string = machine.encrypt('JESS',plain_text);
+
+    assert_equal expected_result, encrypted_string
+  end
+
+end
+<% end %>
+
+And the implementation:
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+class VigenereCipher
+
+  def encrypt(key, plain_text)
+    transform(key, plain_text, 'encrypt')
+  end
+
+  def decrypt(key, encrypted_message)
+    transform(key, encrypted_message, 'decrypt')
+  end
+
+private
+  def transform(key, text, method)
+    n = -1
+    text.split(//).map{|letter| transform_letter(letter, calc_key_letter(key, n+=1), method=='encrypt' ? :+ : :- )}.join
+  end
+
+  def transform_letter(letter, key_letter, plus_or_minus)
+    charset_offset = "A"[0]
+    letter_position = letter[0] - charset_offset
+    key_letter_position = key_letter[0]-charset_offset
+
+    letter_shifts_by = letter_position.send(plus_or_minus, key_letter_position)
+    (letter_shifts_by.modulo(26)+charset_offset).chr
+  end
+
+  def calc_key_letter(key, n)
+    n = n.modulo(key.length)
+    key.split(//)[n]
+  end
+
+end
+<% end %>
+
+If you'd like to download the code you can get it from "my github account":http://github.com/craigmarksmith/vigenere_cipher/tree/master
