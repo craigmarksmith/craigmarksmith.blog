@@ -1,0 +1,57 @@
+---
+title:      Better testing, part 1 - Why we test
+created_at: 2009-11-16 17:04:34.288911 +00:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+I've been testing web applications for a long time now and over the years I've been fortunate enough to work with some experienced, opinionated and above all excellent developers. Each of these developers has shaped and changed the way that I look at programming but the one thing that has developed and changed the most is my understanding of testing.
+With that in mind I've decided to write a series of post describing what I've learnt.
+
+Before I get into testing techniques it's important to understand why testing makes your life and your customers lives better. If you don't understand the reasons for testing it's going to be unlikely that you'll understand or appreciate the reasons for good testing and the techniques to achieve it.
+
+h2. What's in it for me?
+
+h3. code CONFIDENCE
+
+Imagine, after just a matter of seconds/minutes you could run a program that tells you that your application is working as you 
+originally intended. That's what testing gives you.
+
+h3. Stop those pesky bugs coming back
+
+If you're not testing this has happened to you:
+Boss : "We got a bug, will you have a look at it."
+Dev: "No probs boss"
+3 minutes later ...
+Dev: "Boss, it's sorted, let's get it deployed."
+Boss: "Great work."
+
+3 months later ...
+Boss : "We've got a bug, I thought you said it was fixed?"
+Dev : "Soz Boss, I'll get it fixed."
+4 minutes later ...
+Dev: "Boss, it's sorted, let's get it deployed."
+Boss: "Good"
+
+1 months later ...
+Boss : "That f*cking bug is back. Get it fixed!"
+Dev : "Eeek, ok"
+2 minutes later ...
+Dev: "Boss, it's sorted, let's get it deployed."
+Boss: "It'd better be"
+
+repeat until fired ...
+
+h3. better code
+
+When testing, particularly with Test Driven Development,  you're forced to stop and think about the problem before you jump in and start hacking. This means that when you do start coding, you understand the problem, you only write the code you need and that code is clean and of a much higher quality for it.
+
+h3. living documentation
+
+Imagine, a world where your documentation changes with you code. Stop dreaming, start testing.
+
+h3. it's actually pretty fun
+
+because of all of the above (and some games you can play like "ping pong":http://en.wikipedia.org/wiki/Pair_programming#Ping_pong_pair_programming)
