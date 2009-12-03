@@ -1,0 +1,49 @@
+---
+title:      Better testing, part 2 - Should
+created_at: 2009-11-23 15:29:55.103152 +00:00
+filter:
+  - erb
+  - textile
+---
+<%= render(:partial => '/post_title')%>
+
+Naming is one of the most important parts of programming. The same is true of testing. A badly named test is hard to understand where as a well named test can be read and understood in an instant. Not only that, good test naming can lead to a better understanding of the problem and so a better solution and a more thoroughly tested implementation.
+
+A great technic for better test naming is by adding "should" to your testing vocabulary.
+
+Let's take for example an product object that gives you the lowest price from 2 retailers.
+
+<% coderay( :lang => "ruby", :line_numbers => "inline" ) do -%>
+  
+def setup
+  @product1 = Product.new(:name => 'Cheese')
+  @product2 = Product.new(:name => 'Crisps')
+  @product3 = Product.new(:name => 'Soap')
+end
+
+# Bad testing
+def test_individual_items
+  b = Basket.new
+  b.add(@product1)
+  b.add(@product3)
+  b.add(@product1)
+  
+  assert_equal 2, b.individual_items.size
+end
+
+# Better
+def test_should_only_return_distinct_products_that_have_been_added
+  b = Basket.new
+  b.add(@product1)
+  b.add(@product3)
+  b.add(@product1)
+  
+  assert_equal 2, b.individual_items.size
+end
+
+<% end %>
+
+This example is kind of artificial but it illustrates the point. 
+Looking at this code 6 months later or as a developer seeing this code for the first time, the first test name is ambiguous and could be confusing.
+The second test is explicit and obvious. (something about the method being badly named.)
+
