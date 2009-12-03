@@ -16,8 +16,7 @@ h2. What's in it for me?
 
 h3. code CONFIDENCE
 
-Imagine, after just a matter of seconds/minutes you could run a program that tells you that your application is working as you 
-originally intended. That's what testing gives you.
+Imagine that you could run a program that tells you that your application is working as you originally intended. That's what testing gives you.
 
 h3. Stop those pesky bugs coming back
 
