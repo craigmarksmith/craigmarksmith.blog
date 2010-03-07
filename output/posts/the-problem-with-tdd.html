@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">26 May 2009</div>
+<h1>The problem with TDD</h1>
+<p>Sometimes it&#8217;s hard to write tests before code. It&#8217;s easy when you have:</p>
+<ul>
+	<li>a clear understanding of the domain</li>
+	<li>an understand what the client wants to achieve</li>
+	<li>an understanding the API&#8217;s you&#8217;ll use to do the job</li>
+</ul>
+<p>But it&#8217;s much harder to write good tests if you don&#8217;t.</p>
+<p>One possible solution is something I&#8217;ve started referring to as <a href="http://chrisroos.co.uk/">Chris Roos</a> Test Driven Development.</p>
+<p>Given a problem or feature you&#8217;re unfamiliar with, a great first step is to prototype the solution. Pick the primary success criteria and hack at the system until you have it doing what you think it should. Don&#8217;t consider any edge cases and don&#8217;t write any tests, just make it do the simplest, dirtiest thing possible. Once you have a clear understanding of the code and the problem, REVERT! This is really important. Don&#8217;t be tempted to retrofit tests on top of your hack, that&#8217;ll result in bad testing and messy code. Take what you&#8217;ve learnt and start a fresh. This time write tests and consider edge cases. You&#8217;ll work much more quickly with an understanding of the system and you&#8217;re code, tests and overall solution will reap the benefit.</p>
+<p>While working with Chris at <a href="http://reevoo.com">Reevoo</a> he often used this method which always resulted in clear, concise code and tests, which is why I&#8217;ve attributed it to him.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

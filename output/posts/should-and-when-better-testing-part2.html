@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">03 December 2009</div>
+<h1>Better testing, part 2 &#8211; Language in testing</h1>
+<p>Naming is one of the most important parts of programming. The same is true of testing. A badly named test is hard to understand where as a well named test can be read and understood in an instant. Not only that, good test naming can lead to a better understanding of the problem and so a better solution and a more thoroughly tested implementation.</p>
+<h2>Should</h2>
+<p>A great technic for better test naming is by adding &#8220;should&#8221; to your testing vocabulary.</p>
+<p>Let&#8217;s take for example a function that give you all the distinct items that have been added to the basket.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">BasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>)
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   <span class="c"># Bad testing</span>
+<span class="no">11</span>   <span class="r">def</span> <span class="fu">test_individual_items</span>
+<span class="no">12</span>     b = <span class="co">Basket</span>.new
+<span class="no">13</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">14</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">15</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">16</span> 
+<span class="no">17</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="c"># Better</span>
+<span class="no">21</span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products_that_have_been_added</span>
+<span class="no">22</span>     b = <span class="co">Basket</span>.new
+<span class="no">23</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">24</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">25</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">26</span> 
+<span class="no">27</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">28</span>   <span class="r">end</span>
+<span class="no">29</span> 
+<span class="no"><strong>30</strong></span> <span class="r">end</span>
+<span class="no">31</span> 
+</pre>
+</div><p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
+<p>But what does &#8220;working&#8221; mean?</p>
+<p>The second test clears that confusion up. By adding the word &#8220;should&#8221; into the name of the test case, we&#8217;re forcing ourselves to think about what we actually want the function to do before coding it.</p>
+<p>The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.</p>
+<h2>When</h2>
+<p>It&#8217;s likely you&#8217;re not going to only want to test the individual_items function when there are items in the basket. We could also want to test a total function that returns how much everything in the basket is going to cost me.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">BasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">1.99</span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">0.49</span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>, , <span class="sy">:price</span> =&gt; <span class="fl">1.20</span>)
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products_that_have_been_added</span>
+<span class="no">11</span>     b = <span class="co">Basket</span>.new
+<span class="no">12</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">13</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">14</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">15</span> 
+<span class="no">16</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">17</span>   <span class="r">end</span>
+<span class="no">18</span> 
+<span class="no">19</span>   <span class="r">def</span> <span class="fu">test_should_give_running_total_of_all_items_that_have_been_added_to_the_basket</span>
+<span class="no"><strong>20</strong></span>     b = <span class="co">Basket</span>.new
+<span class="no">21</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">22</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">23</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">24</span> 
+<span class="no">25</span>     assert_equal <span class="fl">3.19</span>, b.total
+<span class="no">26</span>   <span class="r">end</span>
+<span class="no">27</span> 
+<span class="no">28</span> <span class="r">end</span>
+<span class="no">29</span> 
+</pre>
+</div><p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WhenItemsHaveBeenAddedToTheBasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">1.99</span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">0.49</span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>, , <span class="sy">:price</span> =&gt; <span class="fl">1.20</span>)
+<span class="no"> 8</span> 
+<span class="no"> 9</span>     <span class="iv">@b</span> = <span class="co">Basket</span>.new
+<span class="no"><strong>10</strong></span>     <span class="iv">@b</span>.add(<span class="iv">@product1</span>)
+<span class="no">11</span>     <span class="iv">@b</span>.add(<span class="iv">@product3</span>)
+<span class="no">12</span>     <span class="iv">@b</span>.add(<span class="iv">@product1</span>)
+<span class="no">13</span>   <span class="r">end</span>
+<span class="no">14</span> 
+<span class="no">15</span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products</span>
+<span class="no">16</span>     assert_equal <span class="i">2</span>, <span class="iv">@b</span>.individual_items.size
+<span class="no">17</span>   <span class="r">end</span>
+<span class="no">18</span> 
+<span class="no">19</span>   <span class="r">def</span> <span class="fu">test_should_give_a_running_total</span>
+<span class="no"><strong>20</strong></span>     assert_equal <span class="fl">3.19</span>, <span class="iv">@b</span>.total
+<span class="no">21</span>   <span class="r">end</span>
+<span class="no">22</span> 
+<span class="no">23</span> <span class="r">end</span>
+<span class="no">24</span> 
+</pre>
+</div><p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
+<p>A great way of getting started with this kind of testing is by using <a href="http://github.com/thoughtbot/shoulda">shoulda</a> thoughtbots excellent extension to TestUnit.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

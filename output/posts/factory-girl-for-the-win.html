@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">07 May 2009</div>
+<h1>Factory Girl for the win</h1>
+<p>In my last post I talked about testing and in this post I&#8217;d like to continue that theme.</p>
+<p>As a classicist I like to create actual objects when I test. I find it makes my tests easier to write, shorter and more readable, but creating valid objects can be a messy business.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no"> 2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no"> 3</span>     product = <span class="co">Product</span>.create!(
+<span class="no"> 4</span>                   <span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Dragons</span><span class="dl">'</span></span>,
+<span class="no"> 5</span>                   <span class="sy">:brand</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">5/10</span><span class="dl">'</span></span>,
+<span class="no"> 6</span>                   <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>,
+<span class="no"> 7</span>                   <span class="sy">:ean</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">510DRAG</span><span class="dl">'</span></span>,
+<span class="no"> 8</span>                   <span class="sy">:price</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>)
+<span class="no"> 9</span>     
+<span class="no"><strong>10</strong></span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">11</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">12</span>   <span class="r">end</span>
+<span class="no">13</span> <span class="r">end</span>
+</pre>
+</div><p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
+<p>Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">Mother</span>
+<span class="no"> 2</span>   <span class="r">def</span> <span class="pc">self</span>.create_product(attributes = {})
+<span class="no"> 3</span>     <span class="co">Product</span>.create!({
+<span class="no"> 4</span>       <span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Product</span><span class="dl">'</span></span>,
+<span class="no"> 5</span>       <span class="sy">:brand</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Brand Name</span><span class="dl">'</span></span>,
+<span class="no"> 6</span>       <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">SKU</span><span class="dl">'</span></span>,
+<span class="no"> 7</span>       <span class="sy">:ean</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">EAN</span><span class="dl">'</span></span>,
+<span class="no"> 8</span>       <span class="sy">:price</span> =&gt; <span class="fl">10.00</span>}.merge(attributes))
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> <span class="r">end</span>
+<span class="no">11</span>   
+<span class="no">12</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no">13</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">14</span>     product = <span class="co">Mother</span>.create_product({<span class="sy">:price</span> =&gt; <span class="fl">75.00</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>})
+<span class="no">15</span>     
+<span class="no">16</span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">17</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> <span class="r">end</span>
+</pre>
+</div><p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
+<p>Option 1) Pass the unique parts into the Mother &#8211; <em>but that&#8217;ll pollute the test with irrelevant data again.</em><br />
+Option 2) Modify the Mother to dynamically create values for all the unique attributes<br />
+Option 3) Use something that already does Option 2 and a whole load of other things</p>
+<p>Enter <a href="http://thoughtbot.com/projects/factory_girl">Factory Girl</a></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="c">#tests/factories.rb</span>
+<span class="no"> 2</span> <span class="co">Factory</span>.sequence <span class="sy">:sku</span> <span class="r">do</span> |n|
+<span class="no"> 3</span>   <span class="s"><span class="dl">&quot;</span><span class="k">SKU</span><span class="il"><span class="idl">#{</span>n<span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no"> 4</span> <span class="r">end</span>
+<span class="no"> 5</span> <span class="co">Factory</span>.sequence <span class="sy">:ean</span> <span class="r">do</span> |n|
+<span class="no"> 6</span>   <span class="s"><span class="dl">&quot;</span><span class="k">EAN</span><span class="il"><span class="idl">#{</span>n<span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no"> 7</span> <span class="r">end</span>
+<span class="no"> 8</span> <span class="co">Factory</span>.define <span class="sy">:product</span> <span class="r">do</span> |p|
+<span class="no"> 9</span>   p.name <span class="s"><span class="dl">&quot;</span><span class="k">Product</span><span class="dl">&quot;</span></span>
+<span class="no"><strong>10</strong></span>   p.brand <span class="s"><span class="dl">&quot;</span><span class="k">Brand</span><span class="dl">&quot;</span></span>
+<span class="no">11</span>   p.price <span class="fl">12.50</span>
+<span class="no">12</span>   p.sku{ <span class="co">Factory</span>.next <span class="sy">:sku</span> } <span class="c">#dynamically set the sku</span>
+<span class="no">13</span>   p.ean{ <span class="co">Factory</span>.next <span class="sy">:ean</span> } <span class="c">#dynamically set the ean</span>
+<span class="no">14</span> <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span> <span class="c">#controller test</span>
+<span class="no">17</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no">18</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">19</span>     product = Factory(<span class="sy">:product</span>, <span class="sy">:price</span> =&gt; <span class="fl">75.00</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>)
+<span class="no"><strong>20</strong></span>     
+<span class="no">21</span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">22</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>
+<span class="no">23</span>   <span class="r">end</span>
+<span class="no">24</span> <span class="r">end</span>
+</pre>
+</div><p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

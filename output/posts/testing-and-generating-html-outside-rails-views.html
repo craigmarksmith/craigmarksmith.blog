@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">28 May 2009</div>
+<h1>Testing and generating HTML outside Rails views</h1>
+<p>At <a href="http://reevoo.com">Reevoo</a> we have cause to generate HTML snippets that are written to files rather than served up by a controller. It&#8217;s a pretty non-standard thing to do so I thought I&#8217;d share our methods (and if there&#8217;s a better way maybe someone will tell me).</p>
+<p>First let&#8217;s look at the test:</p>
+<p>(If you&#8217;re not familiar with Factory or should, take a look at <a href="http://thoughtbot.com/projects/factory_girl">Factory Girl</a> and <a href="http://thoughtbot.com/projects/shoulda/">Shoulda</a>)</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WidgetHTMLGeneratorTest</span> &lt; <span class="co">ActiveSupport</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   include <span class="co">ActionController</span>::<span class="co">Assertions</span>::<span class="co">SelectorAssertions</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   should <span class="s"><span class="dl">&quot;</span><span class="k">include the product name</span><span class="dl">&quot;</span></span> <span class="r">do</span>
+<span class="no"> 7</span>     product = Factory(<span class="sy">:product</span>)
+<span class="no"> 8</span>     html = <span class="co">WidgetHTMLGenerator</span>.generate(product)
+<span class="no"> 9</span>     assert_select <span class="co">HTML</span>::<span class="co">Document</span>.new(html).root, <span class="s"><span class="dl">&quot;</span><span class="k">div#product_name</span><span class="dl">&quot;</span></span>, product.name
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span> 
+<span class="no">12</span> <span class="r">end</span>
+<span class="no">13</span> 
+</pre>
+</div><p>Because we&#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&#8217;s really important to us.</p>
+<p>Now the implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WidgetHTMLGenerator</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="pc">self</span>.generate(product)
+<span class="no"> 5</span>     <span class="iv">@product</span> = product
+<span class="no"> 6</span>     file_contents = <span class="co">File</span>.read(<span class="co">File</span>.join(<span class="co">Rails</span>.root,<span class="s"><span class="dl">'</span><span class="k">app</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">views</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">widget_html_generator</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">test.html.erb</span><span class="dl">'</span></span>))
+<span class="no"> 7</span>     erb = <span class="co">ERB</span>.new(file_contents)
+<span class="no"> 8</span>     erb.result(binding)
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span> <span class="r">end</span>
+<span class="no">12</span> 
+</pre>
+</div><p>and the erb file:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> 
+<span class="no">2</span> &lt;div id='problem_name'&gt;&lt;%= @product.name %&gt;&lt;/div&gt;
+<span class="no">3</span> 
+</pre>
+</div></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

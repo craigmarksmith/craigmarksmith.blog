@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">05 May 2009</div>
+<h1>The dangers of over mocking</h1>
+<p><a href="http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting">Classicist vs Mockist</a> approach to <a href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a> is a classic and ongoing debate in the software community.</p>
+<p>I&#8217;ve long been a classicist but I started out my career as a mockist.</p>
+<p>Recently I came up against a particularly poignant example of the drawbacks of heavy mocking and wanted to share the experience.</p>
+<h3>The Mockists solution</h3>
+<div class="CodeRay">
+<pre><span class="no">1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span>
+<span class="no">2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">3</span>     <span class="co">Product</span>.stubs(<span class="sy">:find_by_product_code</span>).returns(stub(<span class="sy">:price</span> =&gt; <span class="fl">12.50</span>))
+<span class="no">4</span>     
+<span class="no">5</span>     get <span class="sy">:show</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>
+<span class="no">6</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">7</span>   <span class="r">end</span>
+<span class="no">8</span> <span class="r">end</span>
+</pre>
+</div><p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
+<p>Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(</p>
+<h3>The Classicists solution</h3>
+<div class="CodeRay">
+<pre><span class="no">1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span>
+<span class="no">2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">3</span>     product = <span class="co">Product</span>.create!(<span class="sy">:price</span> =&gt; <span class="fl">12.50</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>)
+<span class="no">4</span>     
+<span class="no">5</span>     get <span class="sy">:show</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>
+<span class="no">6</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">7</span>   <span class="r">end</span>
+<span class="no">8</span> <span class="r">end</span>
+</pre>
+</div><p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

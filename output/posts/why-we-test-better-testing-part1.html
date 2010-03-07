@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">16 November 2009</div>
+<h1>Better testing, part 1 &#8211; Why we test</h1>
+<p>I&#8217;ve been testing web applications for a long time now and over the years I&#8217;ve been fortunate enough to work with some experienced, opinionated and above all excellent developers. Each of these developers has shaped and changed the way that I look at programming but the one thing that has developed and changed the most is my understanding of testing.<br />
+With that in mind I&#8217;ve decided to write a series of post describing what I&#8217;ve learnt.</p>
+<p>Before I get into testing techniques it&#8217;s important to understand why testing makes your life and your customers lives better. If you don&#8217;t understand the reasons for testing it&#8217;s going to be unlikely that you&#8217;ll understand or appreciate the reasons for good testing and the techniques to achieve it.</p>
+<h2>What&#8217;s in it for me?</h2>
+<h3>code CONFIDENCE</h3>
+<p>Imagine that you could run a program that tells you that your application is working as you originally intended. That&#8217;s what testing gives you.</p>
+<h3>Stop those pesky bugs coming back</h3>
+<p>If you&#8217;re not testing this has happened to you:<br />
+Boss : &#8220;We got a bug, will you have a look at it.&#8221;<br />
+Dev: &#8220;No probs boss&#8221;<br />
+3 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;Great work.&#8221;</p>
+<p>3 months later &#8230;<br />
+Boss : &#8220;We&#8217;ve got a bug, I thought you said it was fixed?&#8221;<br />
+Dev : &#8220;Soz Boss, I&#8217;ll get it fixed.&#8221;<br />
+4 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;Good&#8221;</p>
+<p>1 months later &#8230;<br />
+Boss : &#8220;That f*cking bug is back. Get it fixed!&#8221;<br />
+Dev : &#8220;Eeek, ok&#8221;<br />
+2 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;It&#8217;d better be&#8221;</p>
+<p>repeat until fired &#8230;</p>
+<h3>better code</h3>
+<p>When testing, particularly with Test Driven Development,  you&#8217;re forced to stop and think about the problem before you jump in and start hacking. This means that when you do start coding, you understand the problem, you only write the code you need and that code is clean and of a much higher quality for it.</p>
+<h3>living documentation</h3>
+<p>Imagine, a world where your documentation changes with you code. Stop dreaming, start testing.</p>
+<h3>it&#8217;s actually pretty fun</h3>
+<p>because of all of the above (and some games you can play like <a href="http://en.wikipedia.org/wiki/Pair_programming#Ping_pong_pair_programming">ping pong</a>)</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

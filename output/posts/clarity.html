@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">13 October 2007</div>
+<h1>Clarity</h1>
+<p>I love that feeling, the one where you&#8217;ve done something for years, known it was the right thing to do but never been able to prove it, until that moment. You&#8217;ve just taken the word of others and trusted their experience and then, suddenly, it all makes sense and you know you where right to follow your instincts and place your trust in that person.</p>
+<p>That &#8216;clarity&#8217; has happened to me many times during my professional career but a fairly important one happened just a few weeks ago.</p>
+<p>I&#8217;ve been rewriting my main website (<a href="http://www.themoves.co.uk">themoves</a>) on and off for around 4 years now. As soon as I finish a version I almost immediately start the next. The functionality over the years hasn&#8217;t changed but under the hood, the code is getting smarter, cleaner, faster and maybe one of these days I might even be confident enough to show it to someone.<br />
+It&#8217;s during this fourth rewrite that I had my most recent &#8216;attack&#8217; of &#8216;clarity&#8217;. The difference with this version is that it&#8217;s test driven (TDD).</p>
+<p>I&#8217;ve always understood and trusted the reasons for automated testing and TDD:</p>
+<ul>
+	<li>Code confidence</li>
+	<li>Good test == good code</li>
+	<li>Tests == documentation</li>
+	<li>You only write what you need</li>
+	<li>Helps break your code into smaller deliverables</li>
+</ul>
+<p>Up until now (well, a fair while ago but now being the moment of &#8216;clarity&#8217;), reason 4 was lost on me. Surely I only write the code that I need. I&#8217;m not the sort of guy who over engines, I&#8217;m way too lazy for that. I write the bare minimum so my app does what I need then forget it. I&#8217;ve got way too much climbing to do to waste my time doing anything I don&#8217;t need to. This rule doesn&#8217;t apply to me!!!</p>
+<p>WRONG!</p>
+<p>Themoves3, the current live version of the site was, in my eyes, a disaster. It look ages to write and didn&#8217;t do anything that themoves2 didn&#8217;t. It&#8217;s almost exactly the same except some variables have been moved around and some methods have been moved into their own objects. Most professionals call this a Refactor but I had to rewrite because I had no code confidence. It was a total disaster because themoves3 also didn&#8217;t have any test, hens, themoves4 was born.</p>
+<p>The clarity came when I was writing the Configuration class, a simple object that allows me to access configuration options such as DB user name, passwords etc. I found that, when I was reimplementing this class, the code I was writing was cleaner and I was writing less of it. In fact, the new class was 25% shorter. The reason was simple. By writing tests I&#8217;d been forced to think about exactly what I wanted before starting to code. I wasn&#8217;t coding and thinking and inventing all at the same time, so by breaking up the requirements into test I got exactly what I wanted, not what I thought I wanted.</p>
+<p>So, if you&#8217;re reading this and not writing test for your current app then STOP and start writing some. If you don&#8217;t see why at the moment please, TRUST me, you&#8217;ll be glad you did.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

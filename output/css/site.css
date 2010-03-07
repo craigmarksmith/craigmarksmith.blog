@@ -1,0 +1,100 @@
+
+body {
+  font-family: 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif;
+  margin:0;
+}
+
+/* Headings
+ * --------------------------------------------------------------------- */
+h1,h2,h3,h4,h5,h6 {
+  font-size:20px;
+  color: #703A5B;
+}
+
+h3{
+  font-size:16px;
+  padding:0;
+  margin:0;
+  margin-top:20px;
+}
+
+/* Text Elements
+ * --------------------------------------------------------------------- */
+a                 { color: #703A5B; }
+a:hover           { color: #000; }
+blockquote        { color: #666; }
+
+p {
+  font-size: 13px;
+}
+
+a img {
+  border:0;
+}
+
+.container {
+  width:1000px;
+}
+
+h3{
+  font-size:14px;
+}
+
+h3#aboutMe {
+  margin:0;
+}
+
+div#header img{
+  padding-left:93px;
+}
+
+div#content {
+  float:left;
+  border-right:1px solid #3A704F;
+  width:500px;
+  padding:10px 100px;
+}
+
+div#content .post {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #3A704F;
+}
+
+div#content .created_at{
+  font-size:10px;
+  color: #999;
+}
+
+div#content {
+  font-size:13px;
+}
+
+div#content .post img{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  border:1px solid #3A704F;
+  padding:5px;
+}
+
+div#sideBar {
+  float:left;
+  padding:10px;
+  margin-left:30px;
+  width:200px;
+}
+
+div#sideBar ul{
+  margin:0;
+  padding:0;
+  list-style-position:inside;
+}
+
+div#sideBar li{
+  font-size:12px;
+}
+
+img#gravitar {
+  border: 1px solid #3A704F;
+}
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">20 September 2007</div>
+<h1>A first look at Python</h1>
+<p>Around a year ago I read the O&#8217;Reilly &#8216;Learning Python&#8217; book and since then I&#8217;ve been looking for a quick, interesting and easy challenge to put it to use.</p>
+<p>Around two years ago a friend bought me a copy of &#8220;The Code Book &#8211; the secret history of codes and code-breaking&#8221; by Simon Singh. At the time I thought &#8220;cheers, that looks dull&#8221;, but as usual I was completely wrong. It&#8217;s probably one of the most interesting books I&#8217;ve ever read. Even better than Alex James autobiography and everyone knows I love that since for about 3 months all I talked about was carrots and 120bpm.</p>
+<p>Anyway, The Code Book introduced me to the Vigenere Cipher, a method that uses a key phrase to encrypt any plain text. This encryption method seemed like a great opportunity to put together a little code that takes a key phrase and some plain text and encrypts one with the other.</p>
+<p>Heres my attempt.</p>
+<p>The unit test:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> import unittest;
+<span class="no"> 2</span> from CypherMachine import *;
+<span class="no"> 3</span> 
+<span class="no"> 4</span> class CypherMachineTest(unittest.TestCase):
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   def test_encrypt(self):
+<span class="no"> 7</span>     test_string     = 'thisisateststring';
+<span class="no"> 8</span>     expected_result = 'clabmkjxwbxkcvawk';
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>     machine = CypherMachine();
+<span class="no">11</span>     encrypted_string = machine.encrypt('jes',test_string);
+<span class="no">12</span> 
+<span class="no">13</span>     assert encrypted_string == expected_result
+<span class="no">14</span> 
+<span class="no">15</span> 
+<span class="no">16</span> if __name__ == &quot;__main__&quot;:
+<span class="no">17</span>   unittest.main();
+</pre>
+</div><p>The implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> class CypherMachine:
+<span class="no"> 2</span>   def encrypt(self,key,plain_text):
+<span class="no"> 3</span>     encrypted_text = ''
+<span class="no"> 4</span> 
+<span class="no"> 5</span>     position = 0
+<span class="no"> 6</span>     while position &lt; len(plain_text):
+<span class="no"> 7</span>       for key_letter in key:
+<span class="no"> 8</span>         if position == len(plain_text):
+<span class="no"> 9</span>           break
+<span class="no"><strong>10</strong></span>         encrypted_text = encrypted_text + self.encryptLetter(key_letter,plain_text[position])
+<span class="no">11</span>         position = position + 1
+<span class="no">12</span> 
+<span class="no">13</span>     return encrypted_text
+<span class="no">14</span> 
+<span class="no">15</span>   def encryptLetter(self,key_letter,plain_letter):
+<span class="no">16</span> 
+<span class="no">17</span>     key_position = ord(key_letter)
+<span class="no">18</span>     plain_letter_position = ord(plain_letter)
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>     #96 being the number to bring lower case letters to there position in the alphabet
+<span class="no">21</span>     #-1 since the cyper square starts with b
+<span class="no">22</span>     key_alphabet_position = ord(key_letter) - 96 - 1
+<span class="no">23</span> 
+<span class="no">24</span>     encrypted_position = plain_letter_position + key_alphabet_position
+<span class="no">25</span> 
+<span class="no">26</span>     if encrypted_position &gt; ord('z'):
+<span class="no">27</span>       encrypted_position = encrypted_position - 26
+<span class="no">28</span> 
+<span class="no">29</span>     encrypted_letter = chr(encrypted_position)
+<span class="no"><strong>30</strong></span>     return encrypted_letter
+</pre>
+</div><p>I know it&#8217;s not as neat or as simple as it should be but for an hours work I&#8217;m pretty happy with it. I love that fact that in Python you don&#8217;t waste time typing inconsequential characters like &#8216;{&#8217; and &#8216;;&#8217;. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I&#8217;d written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they&#8217;re both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it&#8217;s just so easy. Import the unittest modules and get on with it. Perfect!</p>
+<p>Maybe if testing in PHP was this easy I&#8217;d get fewer dirty looks when I tell people I&#8217;m a PHP developer.</p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+  <title>craigmarksmith atom feed</title>
+  <subtitle>craigmarksmith tech blog</subtitle>
+  <link href="http://craigmarksmith.co.uk/feed.xml" rel="self" />
+  <link href="http://craigmarksmith.co.uk/" />
+  <updated>2010-03-07T18:09:07+00:00</updated>
+  <author>
+    <name>Craig Smith</name>
+  </author>
+  <id>http://craigmarksmith.co.uk/</id>
+  
+  <entry>
+    <title>Better testing, part 2 - Language in testing</title>
+    <link href="/posts/should-and-when-better-testing-part2.html" />
+    <id>tag:craigmarksmith.co.uk,2009-12-03:1259854195</id>
+    <updated>2009-12-03T15:29:55+00:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;03 December 2009&lt;/div&gt;
+&lt;h1&gt;Better testing, part 2 &amp;#8211; Language in testing&lt;/h1&gt;
+&lt;p&gt;Naming is one of the most important parts of programming. The same is true of testing. A badly named test is hard to understand where as a well named test can be read and understood in an instant. Not only that, good test naming can lead to a better understanding of the problem and so a better solution and a more thoroughly tested implementation.&lt;/p&gt;
+&lt;h2&gt;Should&lt;/h2&gt;
+&lt;p&gt;A great technic for better test naming is by adding &amp;#8220;should&amp;#8221; to your testing vocabulary.&lt;/p&gt;
+&lt;p&gt;Let&amp;#8217;s take for example a function that give you all the distinct items that have been added to the basket.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;BasketTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;Test&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Unit&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;setup&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Cheese&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product2&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Crisps&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Soap&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Bad testing&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_individual_items&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     b = &lt;span class=&quot;co&quot;&gt;Basket&lt;/span&gt;.new
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;     assert_equal &lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;, b.individual_items.size
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Better&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_only_return_distinct_products_that_have_been_added&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;     b = &lt;span class=&quot;co&quot;&gt;Basket&lt;/span&gt;.new
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;     assert_equal &lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;, b.individual_items.size
+&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;As I&amp;#8217;ve done here, it&amp;#8217;s pretty common to name your test after the function you&amp;#8217;re testing, so test_individual_items tests that the individual items function is &amp;#8220;working&amp;#8221;.&lt;/p&gt;
+&lt;p&gt;But what does &amp;#8220;working&amp;#8221; mean?&lt;/p&gt;
+&lt;p&gt;The second test clears that confusion up. By adding the word &amp;#8220;should&amp;#8221; into the name of the test case, we&amp;#8217;re forcing ourselves to think about what we actually want the function to do before coding it.&lt;/p&gt;
+&lt;p&gt;The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.&lt;/p&gt;
+&lt;h2&gt;When&lt;/h2&gt;
+&lt;p&gt;It&amp;#8217;s likely you&amp;#8217;re not going to only want to test the individual_items function when there are items in the basket. We could also want to test a total function that returns how much everything in the basket is going to cost me.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;BasketTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;Test&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Unit&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;setup&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Cheese&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;1.99&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product2&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Crisps&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;0.49&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Soap&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, , &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;1.20&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_only_return_distinct_products_that_have_been_added&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     b = &lt;span class=&quot;co&quot;&gt;Basket&lt;/span&gt;.new
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;     assert_equal &lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;, b.individual_items.size
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_give_running_total_of_all_items_that_have_been_added_to_the_basket&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     b = &lt;span class=&quot;co&quot;&gt;Basket&lt;/span&gt;.new
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;     b.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;     assert_equal &lt;span class=&quot;fl&quot;&gt;3.19&lt;/span&gt;, b.total
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;These test names are getting too long and there&amp;#8217;s some pretty obvious duplication going on. Here comes &amp;#8220;When&amp;#8221; to help out.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;WhenItemsHaveBeenAddedToTheBasketTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;Test&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Unit&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;setup&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Cheese&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;1.99&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product2&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Crisps&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;0.49&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Soap&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, , &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;1.20&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt; = &lt;span class=&quot;co&quot;&gt;Basket&lt;/span&gt;.new
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt;.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt;.add(&lt;span class=&quot;iv&quot;&gt;@product3&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt;.add(&lt;span class=&quot;iv&quot;&gt;@product1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_only_return_distinct_products&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;     assert_equal &lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt;.individual_items.size
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_give_a_running_total&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     assert_equal &lt;span class=&quot;fl&quot;&gt;3.19&lt;/span&gt;, &lt;span class=&quot;iv&quot;&gt;@b&lt;/span&gt;.total
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;So, using the words When and Should can help your tests and implementation become more readable and more maintainable.&lt;/p&gt;
+&lt;p&gt;A great way of getting started with this kind of testing is by using &lt;a href=&quot;http://github.com/thoughtbot/shoulda&quot;&gt;shoulda&lt;/a&gt; thoughtbots excellent extension to TestUnit.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Better testing, part 1 - Why we test</title>
+    <link href="/posts/why-we-test-better-testing-part1.html" />
+    <id>tag:craigmarksmith.co.uk,2009-11-16:1258391074</id>
+    <updated>2009-11-16T17:04:34+00:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;16 November 2009&lt;/div&gt;
+&lt;h1&gt;Better testing, part 1 &amp;#8211; Why we test&lt;/h1&gt;
+&lt;p&gt;I&amp;#8217;ve been testing web applications for a long time now and over the years I&amp;#8217;ve been fortunate enough to work with some experienced, opinionated and above all excellent developers. Each of these developers has shaped and changed the way that I look at programming but the one thing that has developed and changed the most is my understanding of testing.&lt;br /&gt;
+With that in mind I&amp;#8217;ve decided to write a series of post describing what I&amp;#8217;ve learnt.&lt;/p&gt;
+&lt;p&gt;Before I get into testing techniques it&amp;#8217;s important to understand why testing makes your life and your customers lives better. If you don&amp;#8217;t understand the reasons for testing it&amp;#8217;s going to be unlikely that you&amp;#8217;ll understand or appreciate the reasons for good testing and the techniques to achieve it.&lt;/p&gt;
+&lt;h2&gt;What&amp;#8217;s in it for me?&lt;/h2&gt;
+&lt;h3&gt;code CONFIDENCE&lt;/h3&gt;
+&lt;p&gt;Imagine that you could run a program that tells you that your application is working as you originally intended. That&amp;#8217;s what testing gives you.&lt;/p&gt;
+&lt;h3&gt;Stop those pesky bugs coming back&lt;/h3&gt;
+&lt;p&gt;If you&amp;#8217;re not testing this has happened to you:&lt;br /&gt;
+Boss : &amp;#8220;We got a bug, will you have a look at it.&amp;#8221;&lt;br /&gt;
+Dev: &amp;#8220;No probs boss&amp;#8221;&lt;br /&gt;
+3 minutes later &amp;#8230;&lt;br /&gt;
+Dev: &amp;#8220;Boss, it&amp;#8217;s sorted, let&amp;#8217;s get it deployed.&amp;#8221;&lt;br /&gt;
+Boss: &amp;#8220;Great work.&amp;#8221;&lt;/p&gt;
+&lt;p&gt;3 months later &amp;#8230;&lt;br /&gt;
+Boss : &amp;#8220;We&amp;#8217;ve got a bug, I thought you said it was fixed?&amp;#8221;&lt;br /&gt;
+Dev : &amp;#8220;Soz Boss, I&amp;#8217;ll get it fixed.&amp;#8221;&lt;br /&gt;
+4 minutes later &amp;#8230;&lt;br /&gt;
+Dev: &amp;#8220;Boss, it&amp;#8217;s sorted, let&amp;#8217;s get it deployed.&amp;#8221;&lt;br /&gt;
+Boss: &amp;#8220;Good&amp;#8221;&lt;/p&gt;
+&lt;p&gt;1 months later &amp;#8230;&lt;br /&gt;
+Boss : &amp;#8220;That f*cking bug is back. Get it fixed!&amp;#8221;&lt;br /&gt;
+Dev : &amp;#8220;Eeek, ok&amp;#8221;&lt;br /&gt;
+2 minutes later &amp;#8230;&lt;br /&gt;
+Dev: &amp;#8220;Boss, it&amp;#8217;s sorted, let&amp;#8217;s get it deployed.&amp;#8221;&lt;br /&gt;
+Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
+&lt;p&gt;repeat until fired &amp;#8230;&lt;/p&gt;
+&lt;h3&gt;better code&lt;/h3&gt;
+&lt;p&gt;When testing, particularly with Test Driven Development,  you&amp;#8217;re forced to stop and think about the problem before you jump in and start hacking. This means that when you do start coding, you understand the problem, you only write the code you need and that code is clean and of a much higher quality for it.&lt;/p&gt;
+&lt;h3&gt;living documentation&lt;/h3&gt;
+&lt;p&gt;Imagine, a world where your documentation changes with you code. Stop dreaming, start testing.&lt;/p&gt;
+&lt;h3&gt;it&amp;#8217;s actually pretty fun&lt;/h3&gt;
+&lt;p&gt;because of all of the above (and some games you can play like &lt;a href=&quot;http://en.wikipedia.org/wiki/Pair_programming#Ping_pong_pair_programming&quot;&gt;ping pong&lt;/a&gt;)&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Vigenere cypher in ruby</title>
+    <link href="/posts/vigenere-cypher-in-ruby.html" />
+    <id>tag:craigmarksmith.co.uk,2009-07-01:1246447891</id>
+    <updated>2009-07-01T12:31:31+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;01 July 2009&lt;/div&gt;
+&lt;h1&gt;Vigenere cypher in ruby&lt;/h1&gt;
+&lt;p&gt;Some time ago I implemented the &lt;a href=&quot;http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher&quot;&gt;Vigenere&lt;/a&gt; as a first look at Python. For some time I&amp;#8217;ve wanted to do the same thing in Ruby and I finally found time.&lt;/p&gt;
+&lt;p&gt;The tests:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;test/unit&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;vigenere_cipher&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;VigenereCipherTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;Test&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Unit&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_encrypt_a_string&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     plain_text = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ATTACKATDAWN&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     expected_result = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;LXFOPVEFRNHR&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;     machine = &lt;span class=&quot;co&quot;&gt;VigenereCipher&lt;/span&gt;.new;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     encrypted_string = machine.encrypt(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;LEMONLEMONLE&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,plain_text);
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     assert_equal expected_result, encrypted_string
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_decrypt_a_string&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;     expected_result = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ATTACKATDAWN&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;     encrypted_message = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;LXFOPVEFRNHR&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     machine = &lt;span class=&quot;co&quot;&gt;VigenereCipher&lt;/span&gt;.new;
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;     encrypted_message = machine.decrypt(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;LEMONLEMONLE&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,encrypted_message);
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;     assert_equal expected_result, encrypted_message
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_loop_around_the_key_when_it_is_short_than_the_text&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;     plain_text = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ATTACKATDAWN&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;     expected_result = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;JXLSLOSLMEOF&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;;
+&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt;     machine = &lt;span class=&quot;co&quot;&gt;VigenereCipher&lt;/span&gt;.new;
+&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt;     encrypted_string = machine.encrypt(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;JESS&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,plain_text);
+&lt;span class=&quot;no&quot;&gt;32&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;33&lt;/span&gt;     assert_equal expected_result, encrypted_string
+&lt;span class=&quot;no&quot;&gt;34&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;35&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;36&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;And the implementation:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;VigenereCipher&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;encrypt&lt;/span&gt;(key, plain_text)
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     transform(key, plain_text, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;encrypt&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;decrypt&lt;/span&gt;(key, encrypted_message)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     transform(key, encrypted_message, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;decrypt&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; private
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;transform&lt;/span&gt;(key, text, method)
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     n = &lt;span class=&quot;i&quot;&gt;-1&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     text.split(&lt;span class=&quot;rx&quot;&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;/span&gt;).map{|letter| transform_letter(letter, calc_key_letter(key, n+=&lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;), method==&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;encrypt&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; ? &lt;span class=&quot;sy&quot;&gt;:+&lt;/span&gt; : &lt;span class=&quot;sy&quot;&gt;:-&lt;/span&gt; )}.join
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;transform_letter&lt;/span&gt;(letter, key_letter, plus_or_minus)
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;     charset_offset = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;[&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;     letter_position = letter[&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;] - charset_offset
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     key_letter_position = key_letter[&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;]-charset_offset
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;     letter_shifts_by = letter_position.send(plus_or_minus, key_letter_position)
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;     (letter_shifts_by.modulo(&lt;span class=&quot;i&quot;&gt;26&lt;/span&gt;)+charset_offset).chr
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;calc_key_letter&lt;/span&gt;(key, n)
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;     n = n.modulo(key.length)
+&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;     key.split(&lt;span class=&quot;rx&quot;&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;/span&gt;)[n]
+&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;If you&amp;#8217;d like to download the code you can get it from &lt;a href=&quot;http://github.com/craigmarksmith/vigenere_cipher/tree/master&quot;&gt;my github account&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Converting an array of tuples to a hash</title>
+    <link href="/posts/converting-an-array-of-tuple-to-a-hash.html" />
+    <id>tag:craigmarksmith.co.uk,2009-06-23:1245790958</id>
+    <updated>2009-06-23T22:02:38+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;23 June 2009&lt;/div&gt;
+&lt;h1&gt;Converting an array of tuples to a hash&lt;/h1&gt;
+&lt;p&gt;I was working with a class today that gave me an array of tuples:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; person = [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;],[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]]
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;I want to use this data to create an object so my code would be much prettier if I had a hash.&lt;/p&gt;
+&lt;p&gt;I thought converting this array of tuples to a hash would be messy but it&amp;#8217;s not. You can create a hash from an array like so.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&quot;co&quot;&gt;Hash&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; =&amp;gt; {&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;}
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Now that we know that, we can create a hash from an array of tuples.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &amp;gt;&amp;gt; tuples = [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;],[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]]
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; =&amp;gt; [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;], [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]]
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&quot;co&quot;&gt;Hash&lt;/span&gt;[*tuples.flatten]
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; =&amp;gt; {&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;}
+&lt;/pre&gt;
+&lt;/div&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Testing and generating HTML outside Rails views</title>
+    <link href="/posts/testing-and-generating-html-outside-rails-views.html" />
+    <id>tag:craigmarksmith.co.uk,2009-05-28:1243533463</id>
+    <updated>2009-05-28T18:57:43+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;28 May 2009&lt;/div&gt;
+&lt;h1&gt;Testing and generating HTML outside Rails views&lt;/h1&gt;
+&lt;p&gt;At &lt;a href=&quot;http://reevoo.com&quot;&gt;Reevoo&lt;/a&gt; we have cause to generate HTML snippets that are written to files rather than served up by a controller. It&amp;#8217;s a pretty non-standard thing to do so I thought I&amp;#8217;d share our methods (and if there&amp;#8217;s a better way maybe someone will tell me).&lt;/p&gt;
+&lt;p&gt;First let&amp;#8217;s look at the test:&lt;/p&gt;
+&lt;p&gt;(If you&amp;#8217;re not familiar with Factory or should, take a look at &lt;a href=&quot;http://thoughtbot.com/projects/factory_girl&quot;&gt;Factory Girl&lt;/a&gt; and &lt;a href=&quot;http://thoughtbot.com/projects/shoulda/&quot;&gt;Shoulda&lt;/a&gt;)&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;WidgetHTMLGeneratorTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveSupport&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   include &lt;span class=&quot;co&quot;&gt;ActionController&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Assertions&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;SelectorAssertions&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   should &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;include the product name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     product = Factory(&lt;span class=&quot;sy&quot;&gt;:product&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     html = &lt;span class=&quot;co&quot;&gt;WidgetHTMLGenerator&lt;/span&gt;.generate(product)
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     assert_select &lt;span class=&quot;co&quot;&gt;HTML&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Document&lt;/span&gt;.new(html).root, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;div#product_name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, product.name
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Because we&amp;#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&amp;#8217;s really important to us.&lt;/p&gt;
+&lt;p&gt;Now the implementation:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;WidgetHTMLGenerator&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.generate(product)
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@product&lt;/span&gt; = product
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;     file_contents = &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.read(&lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.join(&lt;span class=&quot;co&quot;&gt;Rails&lt;/span&gt;.root,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;widget_html_generator&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;test.html.erb&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;))
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     erb = &lt;span class=&quot;co&quot;&gt;ERB&lt;/span&gt;.new(file_contents)
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     erb.result(binding)
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;and the erb file:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; &amp;lt;div id='problem_name'&amp;gt;&amp;lt;%= @product.name %&amp;gt;&amp;lt;/div&amp;gt;
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;/div&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>The problem with TDD</title>
+    <link href="/posts/the-problem-with-tdd.html" />
+    <id>tag:craigmarksmith.co.uk,2009-05-26:1243363737</id>
+    <updated>2009-05-26T19:48:57+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;26 May 2009&lt;/div&gt;
+&lt;h1&gt;The problem with TDD&lt;/h1&gt;
+&lt;p&gt;Sometimes it&amp;#8217;s hard to write tests before code. It&amp;#8217;s easy when you have:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;a clear understanding of the domain&lt;/li&gt;
+	&lt;li&gt;an understand what the client wants to achieve&lt;/li&gt;
+	&lt;li&gt;an understanding the API&amp;#8217;s you&amp;#8217;ll use to do the job&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But it&amp;#8217;s much harder to write good tests if you don&amp;#8217;t.&lt;/p&gt;
+&lt;p&gt;One possible solution is something I&amp;#8217;ve started referring to as &lt;a href=&quot;http://chrisroos.co.uk/&quot;&gt;Chris Roos&lt;/a&gt; Test Driven Development.&lt;/p&gt;
+&lt;p&gt;Given a problem or feature you&amp;#8217;re unfamiliar with, a great first step is to prototype the solution. Pick the primary success criteria and hack at the system until you have it doing what you think it should. Don&amp;#8217;t consider any edge cases and don&amp;#8217;t write any tests, just make it do the simplest, dirtiest thing possible. Once you have a clear understanding of the code and the problem, REVERT! This is really important. Don&amp;#8217;t be tempted to retrofit tests on top of your hack, that&amp;#8217;ll result in bad testing and messy code. Take what you&amp;#8217;ve learnt and start a fresh. This time write tests and consider edge cases. You&amp;#8217;ll work much more quickly with an understanding of the system and you&amp;#8217;re code, tests and overall solution will reap the benefit.&lt;/p&gt;
+&lt;p&gt;While working with Chris at &lt;a href=&quot;http://reevoo.com&quot;&gt;Reevoo&lt;/a&gt; he often used this method which always resulted in clear, concise code and tests, which is why I&amp;#8217;ve attributed it to him.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Factory Girl for the win</title>
+    <link href="/posts/factory-girl-for-the-win.html" />
+    <id>tag:craigmarksmith.co.uk,2009-05-07:1241679084</id>
+    <updated>2009-05-07T07:51:24+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;07 May 2009&lt;/div&gt;
+&lt;h1&gt;Factory Girl for the win&lt;/h1&gt;
+&lt;p&gt;In my last post I talked about testing and in this post I&amp;#8217;d like to continue that theme.&lt;/p&gt;
+&lt;p&gt;As a classicist I like to create actual objects when I test. I find it makes my tests easier to write, shorter and more readable, but creating valid objects can be a messy business.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;ProductControllerTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActionController&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_show_price&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     product = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.create!(
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;                   &lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Dragons&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;                   &lt;span class=&quot;sy&quot;&gt;:brand&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;5/10&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;                   &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;                   &lt;span class=&quot;sy&quot;&gt;:ean&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;510DRAG&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;                   &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;75.00&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;     get &lt;span class=&quot;sy&quot;&gt;:show&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     assert_select &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;.price&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;12.50&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&amp;#8217;t need to do it in this clunky, verbose way. Enter the &lt;a href=&quot;http://martinfowler.com/bliki/ObjectMother.html&quot;&gt;Object Mother&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Mother&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.create_product(attributes = {})
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.create!({
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Product&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;       &lt;span class=&quot;sy&quot;&gt;:brand&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Brand Name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;       &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SKU&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;       &lt;span class=&quot;sy&quot;&gt;:ean&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;EAN&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;       &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;10.00&lt;/span&gt;}.merge(attributes))
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;ProductControllerTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActionController&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_show_price&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     product = &lt;span class=&quot;co&quot;&gt;Mother&lt;/span&gt;.create_product({&lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;75.00&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;})
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;     
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;     get &lt;span class=&quot;sy&quot;&gt;:show&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;     assert_select &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;.price&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;75.00&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&amp;#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.&lt;/p&gt;
+&lt;p&gt;Option 1) Pass the unique parts into the Mother &amp;#8211; &lt;em&gt;but that&amp;#8217;ll pollute the test with irrelevant data again.&lt;/em&gt;&lt;br /&gt;
+Option 2) Modify the Mother to dynamically create values for all the unique attributes&lt;br /&gt;
+Option 3) Use something that already does Option 2 and a whole load of other things&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href=&quot;http://thoughtbot.com/projects/factory_girl&quot;&gt;Factory Girl&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#tests/factories.rb&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Factory&lt;/span&gt;.sequence &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |n|
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SKU&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;n&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Factory&lt;/span&gt;.sequence &lt;span class=&quot;sy&quot;&gt;:ean&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |n|
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;EAN&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;n&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Factory&lt;/span&gt;.define &lt;span class=&quot;sy&quot;&gt;:product&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |p|
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   p.name &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Product&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   p.brand &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Brand&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   p.price &lt;span class=&quot;fl&quot;&gt;12.50&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   p.sku{ &lt;span class=&quot;co&quot;&gt;Factory&lt;/span&gt;.next &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; } &lt;span class=&quot;c&quot;&gt;#dynamically set the sku&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   p.ean{ &lt;span class=&quot;co&quot;&gt;Factory&lt;/span&gt;.next &lt;span class=&quot;sy&quot;&gt;:ean&lt;/span&gt; } &lt;span class=&quot;c&quot;&gt;#dynamically set the ean&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#controller test&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;ProductControllerTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActionController&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_show_price&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;     product = Factory(&lt;span class=&quot;sy&quot;&gt;:product&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;75.00&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;     get &lt;span class=&quot;sy&quot;&gt;:show&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:sku&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ABC&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;     assert_select &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;.price&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;75.00&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>The dangers of over mocking</title>
+    <link href="/posts/dangers-of-over-mocking.html" />
+    <id>tag:craigmarksmith.co.uk,2009-05-05:1241541678</id>
+    <updated>2009-05-05T17:41:18+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;05 May 2009&lt;/div&gt;
+&lt;h1&gt;The dangers of over mocking&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting&quot;&gt;Classicist vs Mockist&lt;/a&gt; approach to &lt;a href=&quot;http://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;TDD&lt;/a&gt; is a classic and ongoing debate in the software community.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve long been a classicist but I started out my career as a mockist.&lt;/p&gt;
+&lt;p&gt;Recently I came up against a particularly poignant example of the drawbacks of heavy mocking and wanted to share the experience.&lt;/p&gt;
+&lt;h3&gt;The Mockists solution&lt;/h3&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;ProductControllerTest&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_show_price&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.stubs(&lt;span class=&quot;sy&quot;&gt;:find_by_product_code&lt;/span&gt;).returns(stub(&lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;12.50&lt;/span&gt;))
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;     
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     get &lt;span class=&quot;sy&quot;&gt;:show&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:product_code&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;IPOD&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;     assert_select &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;.price&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;12.50&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;In the test above we want to make sure that the controller shows the price on the product page. We don&amp;#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.&lt;/p&gt;
+&lt;p&gt;Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&amp;#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(&lt;/p&gt;
+&lt;h3&gt;The Classicists solution&lt;/h3&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;ProductControllerTest&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;test_should_show_price&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     product = &lt;span class=&quot;co&quot;&gt;Product&lt;/span&gt;.create!(&lt;span class=&quot;sy&quot;&gt;:price&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;12.50&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:product_code&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;IPOD&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;     
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     get &lt;span class=&quot;sy&quot;&gt;:show&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:product_code&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;IPOD&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;     assert_select &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;.price&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;12.50&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Interactive Rake</title>
+    <link href="/posts/interactive-rake.html" />
+    <id>tag:craigmarksmith.co.uk,2009-04-30:1241117354</id>
+    <updated>2009-04-30T19:49:14+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;30 April 2009&lt;/div&gt;
+&lt;h1&gt;Interactive Rake&lt;/h1&gt;
+&lt;p&gt;I often find myself using &lt;code&gt;rake -T&lt;/code&gt;. I always have a vague idea of the name of the Rake task I&amp;#8217;d like to run but often tasks with long names slip my mind. I&amp;#8217;m also incredibly lazy and don&amp;#8217;t want to type the entire name of the task if I don&amp;#8217;t have to.&lt;br /&gt;
+That&amp;#8217;s why I decided I needed Interactive Rake. The ability to search though my tasks and then choose the one I&amp;#8217;d like to run from a list.&lt;/p&gt;
+&lt;p&gt;For example, to search your tasks for the name &amp;#8220;create&amp;#8221;, then run &lt;code&gt;rake tmp:create&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; craig:themoves.co.uk craig$ rake -i create
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; (in /Users/craig/rails_sites/themoves.co.uk)
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; 0) rake db:create           # Create the database defined in config/database.yml for the current RAILS_ENV
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; 1) rake db:create:all       # Create all the local databases defined in config/database.yml
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; 2) rake db:sessions:create  # Creates a sessions migration for use with ActiveRecord::SessionStore
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
+&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; Choose a task: 3
+&lt;/pre&gt;
+&lt;/div&gt;&lt;p&gt;Sadly Jim Weirich is being elusive so I&amp;#8217;m having trouble getting my fork merged back in to the trunk. If you&amp;#8217;d like to use Interactive Rake it&amp;#8217;s hosted at &lt;a href=&quot;http://github.com/craigmarksmith/rake&quot;&gt;github.com/craigmarksmith/rake&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Agile Icecream</title>
+    <link href="/posts/agile-icecream.html" />
+    <id>tag:craigmarksmith.co.uk,2008-07-03:1215109712</id>
+    <updated>2008-07-03T19:28:32+01:00</updated>
+    <content type="html">&lt;div class=&quot;created_at&quot;&gt;03 July 2008&lt;/div&gt;
+&lt;h1&gt;Agile Icecream&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/icecream.jpg&quot; alt=&quot;icecream&quot; title=&quot;Agile Icecream&quot;&gt;&lt;/p&gt;
+&lt;p&gt;A new restaurant has recently opened up close to &lt;a href=&quot;http://ominor.com&quot;&gt;Ominors&lt;/a&gt; office. That’s nothing new you might say, since the office is on Chiswick High Road, but this restaurant is a little different.&lt;/p&gt;
+&lt;p&gt;Originally the premises had been a knickknacks shop selling season bits and pieces, seasonal tat, some might call it. As soon as Christmas had ended their fate was inevitable and had closed by the end of February. Our intrepid restaurateurs started to convert the old shop some time in June and to my amazement opened about a week and a half later. Amazing I thought, how could they have possible have completely overhauled a shop, installed a kitchen and employed a chef in such a small amount of time?&lt;/p&gt;
+&lt;p&gt;The answer was simple, they hadn&amp;#8217;t!&lt;/p&gt;
+&lt;p&gt;On my first visit, they simply had a small ice cream booth at the front of the shop, which was generating a fair amount of attention from some local kids, and a sign saying &amp;#8220;Coming Soon&amp;#8221; in what would be the dinning area.&lt;/p&gt;
+&lt;p&gt;To me this is the perfect example of Agile in action. BLAH have delivered business value by doing the simplest thing that works and are, most importantly, making money.&lt;/p&gt;</content>
+  </entry>
+  
+</feed>

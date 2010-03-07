@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">30 April 2009</div>
+<h1>Interactive Rake</h1>
+<p>I often find myself using <code>rake -T</code>. I always have a vague idea of the name of the Rake task I&#8217;d like to run but often tasks with long names slip my mind. I&#8217;m also incredibly lazy and don&#8217;t want to type the entire name of the task if I don&#8217;t have to.<br />
+That&#8217;s why I decided I needed Interactive Rake. The ability to search though my tasks and then choose the one I&#8217;d like to run from a list.</p>
+<p>For example, to search your tasks for the name &#8220;create&#8221;, then run <code>rake tmp:create</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span> craig:themoves.co.uk craig$ rake -i create
+<span class="no">2</span> (in /Users/craig/rails_sites/themoves.co.uk)
+<span class="no">3</span> 0) rake db:create           # Create the database defined in config/database.yml for the current RAILS_ENV
+<span class="no">4</span> 1) rake db:create:all       # Create all the local databases defined in config/database.yml
+<span class="no">5</span> 2) rake db:sessions:create  # Creates a sessions migration for use with ActiveRecord::SessionStore
+<span class="no">6</span> 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
+<span class="no">7</span> Choose a task: 3
+</pre>
+</div><p>Sadly Jim Weirich is being elusive so I&#8217;m having trouble getting my fork merged back in to the trunk. If you&#8217;d like to use Interactive Rake it&#8217;s hosted at <a href="http://github.com/craigmarksmith/rake">github.com/craigmarksmith/rake</a></p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

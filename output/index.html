@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content">
+
+
+  <div class="post"><div class="created_at">03 December 2009</div>
+<h1>Better testing, part 2 &#8211; Language in testing</h1>
+<p>Naming is one of the most important parts of programming. The same is true of testing. A badly named test is hard to understand where as a well named test can be read and understood in an instant. Not only that, good test naming can lead to a better understanding of the problem and so a better solution and a more thoroughly tested implementation.</p>
+<h2>Should</h2>
+<p>A great technic for better test naming is by adding &#8220;should&#8221; to your testing vocabulary.</p>
+<p>Let&#8217;s take for example a function that give you all the distinct items that have been added to the basket.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">BasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>)
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   <span class="c"># Bad testing</span>
+<span class="no">11</span>   <span class="r">def</span> <span class="fu">test_individual_items</span>
+<span class="no">12</span>     b = <span class="co">Basket</span>.new
+<span class="no">13</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">14</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">15</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">16</span> 
+<span class="no">17</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="c"># Better</span>
+<span class="no">21</span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products_that_have_been_added</span>
+<span class="no">22</span>     b = <span class="co">Basket</span>.new
+<span class="no">23</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">24</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">25</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">26</span> 
+<span class="no">27</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">28</span>   <span class="r">end</span>
+<span class="no">29</span> 
+<span class="no"><strong>30</strong></span> <span class="r">end</span>
+<span class="no">31</span> 
+</pre>
+</div><p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
+<p>But what does &#8220;working&#8221; mean?</p>
+<p>The second test clears that confusion up. By adding the word &#8220;should&#8221; into the name of the test case, we&#8217;re forcing ourselves to think about what we actually want the function to do before coding it.</p>
+<p>The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.</p>
+<h2>When</h2>
+<p>It&#8217;s likely you&#8217;re not going to only want to test the individual_items function when there are items in the basket. We could also want to test a total function that returns how much everything in the basket is going to cost me.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">BasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">1.99</span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">0.49</span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>, , <span class="sy">:price</span> =&gt; <span class="fl">1.20</span>)
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products_that_have_been_added</span>
+<span class="no">11</span>     b = <span class="co">Basket</span>.new
+<span class="no">12</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">13</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">14</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">15</span> 
+<span class="no">16</span>     assert_equal <span class="i">2</span>, b.individual_items.size
+<span class="no">17</span>   <span class="r">end</span>
+<span class="no">18</span> 
+<span class="no">19</span>   <span class="r">def</span> <span class="fu">test_should_give_running_total_of_all_items_that_have_been_added_to_the_basket</span>
+<span class="no"><strong>20</strong></span>     b = <span class="co">Basket</span>.new
+<span class="no">21</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">22</span>     b.add(<span class="iv">@product3</span>)
+<span class="no">23</span>     b.add(<span class="iv">@product1</span>)
+<span class="no">24</span> 
+<span class="no">25</span>     assert_equal <span class="fl">3.19</span>, b.total
+<span class="no">26</span>   <span class="r">end</span>
+<span class="no">27</span> 
+<span class="no">28</span> <span class="r">end</span>
+<span class="no">29</span> 
+</pre>
+</div><p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WhenItemsHaveBeenAddedToTheBasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="fu">setup</span>
+<span class="no"> 5</span>     <span class="iv">@product1</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Cheese</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">1.99</span>)
+<span class="no"> 6</span>     <span class="iv">@product2</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Crisps</span><span class="dl">'</span></span>, <span class="sy">:price</span> =&gt; <span class="fl">0.49</span>)
+<span class="no"> 7</span>     <span class="iv">@product3</span> = <span class="co">Product</span>.new(<span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Soap</span><span class="dl">'</span></span>, , <span class="sy">:price</span> =&gt; <span class="fl">1.20</span>)
+<span class="no"> 8</span> 
+<span class="no"> 9</span>     <span class="iv">@b</span> = <span class="co">Basket</span>.new
+<span class="no"><strong>10</strong></span>     <span class="iv">@b</span>.add(<span class="iv">@product1</span>)
+<span class="no">11</span>     <span class="iv">@b</span>.add(<span class="iv">@product3</span>)
+<span class="no">12</span>     <span class="iv">@b</span>.add(<span class="iv">@product1</span>)
+<span class="no">13</span>   <span class="r">end</span>
+<span class="no">14</span> 
+<span class="no">15</span>   <span class="r">def</span> <span class="fu">test_should_only_return_distinct_products</span>
+<span class="no">16</span>     assert_equal <span class="i">2</span>, <span class="iv">@b</span>.individual_items.size
+<span class="no">17</span>   <span class="r">end</span>
+<span class="no">18</span> 
+<span class="no">19</span>   <span class="r">def</span> <span class="fu">test_should_give_a_running_total</span>
+<span class="no"><strong>20</strong></span>     assert_equal <span class="fl">3.19</span>, <span class="iv">@b</span>.total
+<span class="no">21</span>   <span class="r">end</span>
+<span class="no">22</span> 
+<span class="no">23</span> <span class="r">end</span>
+<span class="no">24</span> 
+</pre>
+</div><p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
+<p>A great way of getting started with this kind of testing is by using <a href="http://github.com/thoughtbot/shoulda">shoulda</a> thoughtbots excellent extension to TestUnit.</p></div>
+  <div class="post"><div class="created_at">16 November 2009</div>
+<h1>Better testing, part 1 &#8211; Why we test</h1>
+<p>I&#8217;ve been testing web applications for a long time now and over the years I&#8217;ve been fortunate enough to work with some experienced, opinionated and above all excellent developers. Each of these developers has shaped and changed the way that I look at programming but the one thing that has developed and changed the most is my understanding of testing.<br />
+With that in mind I&#8217;ve decided to write a series of post describing what I&#8217;ve learnt.</p>
+<p>Before I get into testing techniques it&#8217;s important to understand why testing makes your life and your customers lives better. If you don&#8217;t understand the reasons for testing it&#8217;s going to be unlikely that you&#8217;ll understand or appreciate the reasons for good testing and the techniques to achieve it.</p>
+<h2>What&#8217;s in it for me?</h2>
+<h3>code CONFIDENCE</h3>
+<p>Imagine that you could run a program that tells you that your application is working as you originally intended. That&#8217;s what testing gives you.</p>
+<h3>Stop those pesky bugs coming back</h3>
+<p>If you&#8217;re not testing this has happened to you:<br />
+Boss : &#8220;We got a bug, will you have a look at it.&#8221;<br />
+Dev: &#8220;No probs boss&#8221;<br />
+3 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;Great work.&#8221;</p>
+<p>3 months later &#8230;<br />
+Boss : &#8220;We&#8217;ve got a bug, I thought you said it was fixed?&#8221;<br />
+Dev : &#8220;Soz Boss, I&#8217;ll get it fixed.&#8221;<br />
+4 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;Good&#8221;</p>
+<p>1 months later &#8230;<br />
+Boss : &#8220;That f*cking bug is back. Get it fixed!&#8221;<br />
+Dev : &#8220;Eeek, ok&#8221;<br />
+2 minutes later &#8230;<br />
+Dev: &#8220;Boss, it&#8217;s sorted, let&#8217;s get it deployed.&#8221;<br />
+Boss: &#8220;It&#8217;d better be&#8221;</p>
+<p>repeat until fired &#8230;</p>
+<h3>better code</h3>
+<p>When testing, particularly with Test Driven Development,  you&#8217;re forced to stop and think about the problem before you jump in and start hacking. This means that when you do start coding, you understand the problem, you only write the code you need and that code is clean and of a much higher quality for it.</p>
+<h3>living documentation</h3>
+<p>Imagine, a world where your documentation changes with you code. Stop dreaming, start testing.</p>
+<h3>it&#8217;s actually pretty fun</h3>
+<p>because of all of the above (and some games you can play like <a href="http://en.wikipedia.org/wiki/Pair_programming#Ping_pong_pair_programming">ping pong</a>)</p></div>
+  <div class="post"><div class="created_at">01 July 2009</div>
+<h1>Vigenere cypher in ruby</h1>
+<p>Some time ago I implemented the <a href="http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenere</a> as a first look at Python. For some time I&#8217;ve wanted to do the same thing in Ruby and I finally found time.</p>
+<p>The tests:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> require <span class="s"><span class="dl">'</span><span class="k">test/unit</span><span class="dl">'</span></span>
+<span class="no"> 2</span> require <span class="s"><span class="dl">'</span><span class="k">vigenere_cipher</span><span class="dl">'</span></span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span> <span class="r">class</span> <span class="cl">VigenereCipherTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   <span class="r">def</span> <span class="fu">test_should_encrypt_a_string</span>
+<span class="no"> 7</span>     plain_text = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no"> 8</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">LXFOPVEFRNHR</span><span class="dl">'</span></span>;
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">11</span>     encrypted_string = machine.encrypt(<span class="s"><span class="dl">'</span><span class="k">LEMONLEMONLE</span><span class="dl">'</span></span>,plain_text);
+<span class="no">12</span> 
+<span class="no">13</span>     assert_equal expected_result, encrypted_string
+<span class="no">14</span>   <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span>   <span class="r">def</span> <span class="fu">test_should_decrypt_a_string</span>
+<span class="no">17</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no">18</span>     encrypted_message = <span class="s"><span class="dl">'</span><span class="k">LXFOPVEFRNHR</span><span class="dl">'</span></span>;
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">21</span>     encrypted_message = machine.decrypt(<span class="s"><span class="dl">'</span><span class="k">LEMONLEMONLE</span><span class="dl">'</span></span>,encrypted_message);
+<span class="no">22</span> 
+<span class="no">23</span>     assert_equal expected_result, encrypted_message
+<span class="no">24</span>   <span class="r">end</span>
+<span class="no">25</span> 
+<span class="no">26</span>   <span class="r">def</span> <span class="fu">test_should_loop_around_the_key_when_it_is_short_than_the_text</span>
+<span class="no">27</span>     plain_text = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no">28</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">JXLSLOSLMEOF</span><span class="dl">'</span></span>;
+<span class="no">29</span> 
+<span class="no"><strong>30</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">31</span>     encrypted_string = machine.encrypt(<span class="s"><span class="dl">'</span><span class="k">JESS</span><span class="dl">'</span></span>,plain_text);
+<span class="no">32</span> 
+<span class="no">33</span>     assert_equal expected_result, encrypted_string
+<span class="no">34</span>   <span class="r">end</span>
+<span class="no">35</span> 
+<span class="no">36</span> <span class="r">end</span>
+</pre>
+</div><p>And the implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">VigenereCipher</span>
+<span class="no"> 2</span> 
+<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">encrypt</span>(key, plain_text)
+<span class="no"> 4</span>     transform(key, plain_text, <span class="s"><span class="dl">'</span><span class="k">encrypt</span><span class="dl">'</span></span>)
+<span class="no"> 5</span>   <span class="r">end</span>
+<span class="no"> 6</span> 
+<span class="no"> 7</span>   <span class="r">def</span> <span class="fu">decrypt</span>(key, encrypted_message)
+<span class="no"> 8</span>     transform(key, encrypted_message, <span class="s"><span class="dl">'</span><span class="k">decrypt</span><span class="dl">'</span></span>)
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span> private
+<span class="no">12</span>   <span class="r">def</span> <span class="fu">transform</span>(key, text, method)
+<span class="no">13</span>     n = <span class="i">-1</span>
+<span class="no">14</span>     text.split(<span class="rx"><span class="dl">/</span><span class="dl">/</span></span>).map{|letter| transform_letter(letter, calc_key_letter(key, n+=<span class="i">1</span>), method==<span class="s"><span class="dl">'</span><span class="k">encrypt</span><span class="dl">'</span></span> ? <span class="sy">:+</span> : <span class="sy">:-</span> )}.join
+<span class="no">15</span>   <span class="r">end</span>
+<span class="no">16</span> 
+<span class="no">17</span>   <span class="r">def</span> <span class="fu">transform_letter</span>(letter, key_letter, plus_or_minus)
+<span class="no">18</span>     charset_offset = <span class="s"><span class="dl">&quot;</span><span class="k">A</span><span class="dl">&quot;</span></span>[<span class="i">0</span>]
+<span class="no">19</span>     letter_position = letter[<span class="i">0</span>] - charset_offset
+<span class="no"><strong>20</strong></span>     key_letter_position = key_letter[<span class="i">0</span>]-charset_offset
+<span class="no">21</span> 
+<span class="no">22</span>     letter_shifts_by = letter_position.send(plus_or_minus, key_letter_position)
+<span class="no">23</span>     (letter_shifts_by.modulo(<span class="i">26</span>)+charset_offset).chr
+<span class="no">24</span>   <span class="r">end</span>
+<span class="no">25</span> 
+<span class="no">26</span>   <span class="r">def</span> <span class="fu">calc_key_letter</span>(key, n)
+<span class="no">27</span>     n = n.modulo(key.length)
+<span class="no">28</span>     key.split(<span class="rx"><span class="dl">/</span><span class="dl">/</span></span>)[n]
+<span class="no">29</span>   <span class="r">end</span>
+<span class="no"><strong>30</strong></span> 
+<span class="no">31</span> <span class="r">end</span>
+</pre>
+</div><p>If you&#8217;d like to download the code you can get it from <a href="http://github.com/craigmarksmith/vigenere_cipher/tree/master">my github account</a></p></div>
+  <div class="post"><div class="created_at">23 June 2009</div>
+<h1>Converting an array of tuples to a hash</h1>
+<p>I was working with a class today that gave me an array of tuples:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> person = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
+</pre>
+</div><p>I want to use this data to create an object so my code would be much prettier if I had a hash.</p>
+<p>I thought converting this array of tuples to a hash would be messy but it&#8217;s not. You can create a hash from an array like so.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> &gt;&gt; <span class="co">Hash</span>[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]
+<span class="no">2</span> =&gt; {<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>}
+</pre>
+</div><p>Now that we know that, we can create a hash from an array of tuples.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> &gt;&gt; tuples = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
+<span class="no">2</span> =&gt; [[<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>], [<span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>]]
+<span class="no">3</span> &gt;&gt; <span class="co">Hash</span>[*tuples.flatten]
+<span class="no">4</span> =&gt; {<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>}
+</pre>
+</div></div>
+  <div class="post"><div class="created_at">28 May 2009</div>
+<h1>Testing and generating HTML outside Rails views</h1>
+<p>At <a href="http://reevoo.com">Reevoo</a> we have cause to generate HTML snippets that are written to files rather than served up by a controller. It&#8217;s a pretty non-standard thing to do so I thought I&#8217;d share our methods (and if there&#8217;s a better way maybe someone will tell me).</p>
+<p>First let&#8217;s look at the test:</p>
+<p>(If you&#8217;re not familiar with Factory or should, take a look at <a href="http://thoughtbot.com/projects/factory_girl">Factory Girl</a> and <a href="http://thoughtbot.com/projects/shoulda/">Shoulda</a>)</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WidgetHTMLGeneratorTest</span> &lt; <span class="co">ActiveSupport</span>::<span class="co">TestCase</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   include <span class="co">ActionController</span>::<span class="co">Assertions</span>::<span class="co">SelectorAssertions</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   should <span class="s"><span class="dl">&quot;</span><span class="k">include the product name</span><span class="dl">&quot;</span></span> <span class="r">do</span>
+<span class="no"> 7</span>     product = Factory(<span class="sy">:product</span>)
+<span class="no"> 8</span>     html = <span class="co">WidgetHTMLGenerator</span>.generate(product)
+<span class="no"> 9</span>     assert_select <span class="co">HTML</span>::<span class="co">Document</span>.new(html).root, <span class="s"><span class="dl">&quot;</span><span class="k">div#product_name</span><span class="dl">&quot;</span></span>, product.name
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span> 
+<span class="no">12</span> <span class="r">end</span>
+<span class="no">13</span> 
+</pre>
+</div><p>Because we&#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&#8217;s really important to us.</p>
+<p>Now the implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> 
+<span class="no"> 2</span> <span class="r">class</span> <span class="cl">WidgetHTMLGenerator</span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span>   <span class="r">def</span> <span class="pc">self</span>.generate(product)
+<span class="no"> 5</span>     <span class="iv">@product</span> = product
+<span class="no"> 6</span>     file_contents = <span class="co">File</span>.read(<span class="co">File</span>.join(<span class="co">Rails</span>.root,<span class="s"><span class="dl">'</span><span class="k">app</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">views</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">widget_html_generator</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">test.html.erb</span><span class="dl">'</span></span>))
+<span class="no"> 7</span>     erb = <span class="co">ERB</span>.new(file_contents)
+<span class="no"> 8</span>     erb.result(binding)
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span> <span class="r">end</span>
+<span class="no">12</span> 
+</pre>
+</div><p>and the erb file:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> 
+<span class="no">2</span> &lt;div id='problem_name'&gt;&lt;%= @product.name %&gt;&lt;/div&gt;
+<span class="no">3</span> 
+</pre>
+</div></div>
+  <div class="post"><div class="created_at">26 May 2009</div>
+<h1>The problem with TDD</h1>
+<p>Sometimes it&#8217;s hard to write tests before code. It&#8217;s easy when you have:</p>
+<ul>
+	<li>a clear understanding of the domain</li>
+	<li>an understand what the client wants to achieve</li>
+	<li>an understanding the API&#8217;s you&#8217;ll use to do the job</li>
+</ul>
+<p>But it&#8217;s much harder to write good tests if you don&#8217;t.</p>
+<p>One possible solution is something I&#8217;ve started referring to as <a href="http://chrisroos.co.uk/">Chris Roos</a> Test Driven Development.</p>
+<p>Given a problem or feature you&#8217;re unfamiliar with, a great first step is to prototype the solution. Pick the primary success criteria and hack at the system until you have it doing what you think it should. Don&#8217;t consider any edge cases and don&#8217;t write any tests, just make it do the simplest, dirtiest thing possible. Once you have a clear understanding of the code and the problem, REVERT! This is really important. Don&#8217;t be tempted to retrofit tests on top of your hack, that&#8217;ll result in bad testing and messy code. Take what you&#8217;ve learnt and start a fresh. This time write tests and consider edge cases. You&#8217;ll work much more quickly with an understanding of the system and you&#8217;re code, tests and overall solution will reap the benefit.</p>
+<p>While working with Chris at <a href="http://reevoo.com">Reevoo</a> he often used this method which always resulted in clear, concise code and tests, which is why I&#8217;ve attributed it to him.</p></div>
+  <div class="post"><div class="created_at">07 May 2009</div>
+<h1>Factory Girl for the win</h1>
+<p>In my last post I talked about testing and in this post I&#8217;d like to continue that theme.</p>
+<p>As a classicist I like to create actual objects when I test. I find it makes my tests easier to write, shorter and more readable, but creating valid objects can be a messy business.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no"> 2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no"> 3</span>     product = <span class="co">Product</span>.create!(
+<span class="no"> 4</span>                   <span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Dragons</span><span class="dl">'</span></span>,
+<span class="no"> 5</span>                   <span class="sy">:brand</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">5/10</span><span class="dl">'</span></span>,
+<span class="no"> 6</span>                   <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>,
+<span class="no"> 7</span>                   <span class="sy">:ean</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">510DRAG</span><span class="dl">'</span></span>,
+<span class="no"> 8</span>                   <span class="sy">:price</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>)
+<span class="no"> 9</span>     
+<span class="no"><strong>10</strong></span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">11</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">12</span>   <span class="r">end</span>
+<span class="no">13</span> <span class="r">end</span>
+</pre>
+</div><p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
+<p>Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">Mother</span>
+<span class="no"> 2</span>   <span class="r">def</span> <span class="pc">self</span>.create_product(attributes = {})
+<span class="no"> 3</span>     <span class="co">Product</span>.create!({
+<span class="no"> 4</span>       <span class="sy">:name</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Product</span><span class="dl">'</span></span>,
+<span class="no"> 5</span>       <span class="sy">:brand</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Brand Name</span><span class="dl">'</span></span>,
+<span class="no"> 6</span>       <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">SKU</span><span class="dl">'</span></span>,
+<span class="no"> 7</span>       <span class="sy">:ean</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">EAN</span><span class="dl">'</span></span>,
+<span class="no"> 8</span>       <span class="sy">:price</span> =&gt; <span class="fl">10.00</span>}.merge(attributes))
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> <span class="r">end</span>
+<span class="no">11</span>   
+<span class="no">12</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no">13</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">14</span>     product = <span class="co">Mother</span>.create_product({<span class="sy">:price</span> =&gt; <span class="fl">75.00</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>})
+<span class="no">15</span>     
+<span class="no">16</span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">17</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> <span class="r">end</span>
+</pre>
+</div><p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
+<p>Option 1) Pass the unique parts into the Mother &#8211; <em>but that&#8217;ll pollute the test with irrelevant data again.</em><br />
+Option 2) Modify the Mother to dynamically create values for all the unique attributes<br />
+Option 3) Use something that already does Option 2 and a whole load of other things</p>
+<p>Enter <a href="http://thoughtbot.com/projects/factory_girl">Factory Girl</a></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="c">#tests/factories.rb</span>
+<span class="no"> 2</span> <span class="co">Factory</span>.sequence <span class="sy">:sku</span> <span class="r">do</span> |n|
+<span class="no"> 3</span>   <span class="s"><span class="dl">&quot;</span><span class="k">SKU</span><span class="il"><span class="idl">#{</span>n<span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no"> 4</span> <span class="r">end</span>
+<span class="no"> 5</span> <span class="co">Factory</span>.sequence <span class="sy">:ean</span> <span class="r">do</span> |n|
+<span class="no"> 6</span>   <span class="s"><span class="dl">&quot;</span><span class="k">EAN</span><span class="il"><span class="idl">#{</span>n<span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no"> 7</span> <span class="r">end</span>
+<span class="no"> 8</span> <span class="co">Factory</span>.define <span class="sy">:product</span> <span class="r">do</span> |p|
+<span class="no"> 9</span>   p.name <span class="s"><span class="dl">&quot;</span><span class="k">Product</span><span class="dl">&quot;</span></span>
+<span class="no"><strong>10</strong></span>   p.brand <span class="s"><span class="dl">&quot;</span><span class="k">Brand</span><span class="dl">&quot;</span></span>
+<span class="no">11</span>   p.price <span class="fl">12.50</span>
+<span class="no">12</span>   p.sku{ <span class="co">Factory</span>.next <span class="sy">:sku</span> } <span class="c">#dynamically set the sku</span>
+<span class="no">13</span>   p.ean{ <span class="co">Factory</span>.next <span class="sy">:ean</span> } <span class="c">#dynamically set the ean</span>
+<span class="no">14</span> <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span> <span class="c">#controller test</span>
+<span class="no">17</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span> &lt; <span class="co">ActionController</span>::<span class="co">TestCase</span>
+<span class="no">18</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">19</span>     product = Factory(<span class="sy">:product</span>, <span class="sy">:price</span> =&gt; <span class="fl">75.00</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>)
+<span class="no"><strong>20</strong></span>     
+<span class="no">21</span>     get <span class="sy">:show</span>, <span class="sy">:sku</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">ABC</span><span class="dl">'</span></span>
+<span class="no">22</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">75.00</span><span class="dl">'</span></span>
+<span class="no">23</span>   <span class="r">end</span>
+<span class="no">24</span> <span class="r">end</span>
+</pre>
+</div><p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
+  <div class="post"><div class="created_at">05 May 2009</div>
+<h1>The dangers of over mocking</h1>
+<p><a href="http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting">Classicist vs Mockist</a> approach to <a href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a> is a classic and ongoing debate in the software community.</p>
+<p>I&#8217;ve long been a classicist but I started out my career as a mockist.</p>
+<p>Recently I came up against a particularly poignant example of the drawbacks of heavy mocking and wanted to share the experience.</p>
+<h3>The Mockists solution</h3>
+<div class="CodeRay">
+<pre><span class="no">1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span>
+<span class="no">2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">3</span>     <span class="co">Product</span>.stubs(<span class="sy">:find_by_product_code</span>).returns(stub(<span class="sy">:price</span> =&gt; <span class="fl">12.50</span>))
+<span class="no">4</span>     
+<span class="no">5</span>     get <span class="sy">:show</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>
+<span class="no">6</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">7</span>   <span class="r">end</span>
+<span class="no">8</span> <span class="r">end</span>
+</pre>
+</div><p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
+<p>Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(</p>
+<h3>The Classicists solution</h3>
+<div class="CodeRay">
+<pre><span class="no">1</span> <span class="r">class</span> <span class="cl">ProductControllerTest</span>
+<span class="no">2</span>   <span class="r">def</span> <span class="fu">test_should_show_price</span>
+<span class="no">3</span>     product = <span class="co">Product</span>.create!(<span class="sy">:price</span> =&gt; <span class="fl">12.50</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>)
+<span class="no">4</span>     
+<span class="no">5</span>     get <span class="sy">:show</span>, <span class="sy">:product_code</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IPOD</span><span class="dl">'</span></span>
+<span class="no">6</span>     assert_select <span class="s"><span class="dl">'</span><span class="k">.price</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">12.50</span><span class="dl">'</span></span>
+<span class="no">7</span>   <span class="r">end</span>
+<span class="no">8</span> <span class="r">end</span>
+</pre>
+</div><p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
+  <div class="post"><div class="created_at">30 April 2009</div>
+<h1>Interactive Rake</h1>
+<p>I often find myself using <code>rake -T</code>. I always have a vague idea of the name of the Rake task I&#8217;d like to run but often tasks with long names slip my mind. I&#8217;m also incredibly lazy and don&#8217;t want to type the entire name of the task if I don&#8217;t have to.<br />
+That&#8217;s why I decided I needed Interactive Rake. The ability to search though my tasks and then choose the one I&#8217;d like to run from a list.</p>
+<p>For example, to search your tasks for the name &#8220;create&#8221;, then run <code>rake tmp:create</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span> craig:themoves.co.uk craig$ rake -i create
+<span class="no">2</span> (in /Users/craig/rails_sites/themoves.co.uk)
+<span class="no">3</span> 0) rake db:create           # Create the database defined in config/database.yml for the current RAILS_ENV
+<span class="no">4</span> 1) rake db:create:all       # Create all the local databases defined in config/database.yml
+<span class="no">5</span> 2) rake db:sessions:create  # Creates a sessions migration for use with ActiveRecord::SessionStore
+<span class="no">6</span> 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
+<span class="no">7</span> Choose a task: 3
+</pre>
+</div><p>Sadly Jim Weirich is being elusive so I&#8217;m having trouble getting my fork merged back in to the trunk. If you&#8217;d like to use Interactive Rake it&#8217;s hosted at <a href="http://github.com/craigmarksmith/rake">github.com/craigmarksmith/rake</a></p></div>
+  <div class="post"><div class="created_at">03 July 2008</div>
+<h1>Agile Icecream</h1>
+<p><img src="/images/posts/icecream.jpg" alt="icecream" title="Agile Icecream"></p>
+<p>A new restaurant has recently opened up close to <a href="http://ominor.com">Ominors</a> office. That’s nothing new you might say, since the office is on Chiswick High Road, but this restaurant is a little different.</p>
+<p>Originally the premises had been a knickknacks shop selling season bits and pieces, seasonal tat, some might call it. As soon as Christmas had ended their fate was inevitable and had closed by the end of February. Our intrepid restaurateurs started to convert the old shop some time in June and to my amazement opened about a week and a half later. Amazing I thought, how could they have possible have completely overhauled a shop, installed a kitchen and employed a chef in such a small amount of time?</p>
+<p>The answer was simple, they hadn&#8217;t!</p>
+<p>On my first visit, they simply had a small ice cream booth at the front of the shop, which was generating a fair amount of attention from some local kids, and a sign saying &#8220;Coming Soon&#8221; in what would be the dinning area.</p>
+<p>To me this is the perfect example of Agile in action. BLAH have delivered business value by doing the simplest thing that works and are, most importantly, making money.</p></div>
+  <div class="post"><div class="created_at">13 October 2007</div>
+<h1>Clarity</h1>
+<p>I love that feeling, the one where you&#8217;ve done something for years, known it was the right thing to do but never been able to prove it, until that moment. You&#8217;ve just taken the word of others and trusted their experience and then, suddenly, it all makes sense and you know you where right to follow your instincts and place your trust in that person.</p>
+<p>That &#8216;clarity&#8217; has happened to me many times during my professional career but a fairly important one happened just a few weeks ago.</p>
+<p>I&#8217;ve been rewriting my main website (<a href="http://www.themoves.co.uk">themoves</a>) on and off for around 4 years now. As soon as I finish a version I almost immediately start the next. The functionality over the years hasn&#8217;t changed but under the hood, the code is getting smarter, cleaner, faster and maybe one of these days I might even be confident enough to show it to someone.<br />
+It&#8217;s during this fourth rewrite that I had my most recent &#8216;attack&#8217; of &#8216;clarity&#8217;. The difference with this version is that it&#8217;s test driven (TDD).</p>
+<p>I&#8217;ve always understood and trusted the reasons for automated testing and TDD:</p>
+<ul>
+	<li>Code confidence</li>
+	<li>Good test == good code</li>
+	<li>Tests == documentation</li>
+	<li>You only write what you need</li>
+	<li>Helps break your code into smaller deliverables</li>
+</ul>
+<p>Up until now (well, a fair while ago but now being the moment of &#8216;clarity&#8217;), reason 4 was lost on me. Surely I only write the code that I need. I&#8217;m not the sort of guy who over engines, I&#8217;m way too lazy for that. I write the bare minimum so my app does what I need then forget it. I&#8217;ve got way too much climbing to do to waste my time doing anything I don&#8217;t need to. This rule doesn&#8217;t apply to me!!!</p>
+<p>WRONG!</p>
+<p>Themoves3, the current live version of the site was, in my eyes, a disaster. It look ages to write and didn&#8217;t do anything that themoves2 didn&#8217;t. It&#8217;s almost exactly the same except some variables have been moved around and some methods have been moved into their own objects. Most professionals call this a Refactor but I had to rewrite because I had no code confidence. It was a total disaster because themoves3 also didn&#8217;t have any test, hens, themoves4 was born.</p>
+<p>The clarity came when I was writing the Configuration class, a simple object that allows me to access configuration options such as DB user name, passwords etc. I found that, when I was reimplementing this class, the code I was writing was cleaner and I was writing less of it. In fact, the new class was 25% shorter. The reason was simple. By writing tests I&#8217;d been forced to think about exactly what I wanted before starting to code. I wasn&#8217;t coding and thinking and inventing all at the same time, so by breaking up the requirements into test I got exactly what I wanted, not what I thought I wanted.</p>
+<p>So, if you&#8217;re reading this and not writing test for your current app then STOP and start writing some. If you don&#8217;t see why at the moment please, TRUST me, you&#8217;ll be glad you did.</p></div>
+  <div class="post"><div class="created_at">20 September 2007</div>
+<h1>A first look at Python</h1>
+<p>Around a year ago I read the O&#8217;Reilly &#8216;Learning Python&#8217; book and since then I&#8217;ve been looking for a quick, interesting and easy challenge to put it to use.</p>
+<p>Around two years ago a friend bought me a copy of &#8220;The Code Book &#8211; the secret history of codes and code-breaking&#8221; by Simon Singh. At the time I thought &#8220;cheers, that looks dull&#8221;, but as usual I was completely wrong. It&#8217;s probably one of the most interesting books I&#8217;ve ever read. Even better than Alex James autobiography and everyone knows I love that since for about 3 months all I talked about was carrots and 120bpm.</p>
+<p>Anyway, The Code Book introduced me to the Vigenere Cipher, a method that uses a key phrase to encrypt any plain text. This encryption method seemed like a great opportunity to put together a little code that takes a key phrase and some plain text and encrypts one with the other.</p>
+<p>Heres my attempt.</p>
+<p>The unit test:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> import unittest;
+<span class="no"> 2</span> from CypherMachine import *;
+<span class="no"> 3</span> 
+<span class="no"> 4</span> class CypherMachineTest(unittest.TestCase):
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   def test_encrypt(self):
+<span class="no"> 7</span>     test_string     = 'thisisateststring';
+<span class="no"> 8</span>     expected_result = 'clabmkjxwbxkcvawk';
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>     machine = CypherMachine();
+<span class="no">11</span>     encrypted_string = machine.encrypt('jes',test_string);
+<span class="no">12</span> 
+<span class="no">13</span>     assert encrypted_string == expected_result
+<span class="no">14</span> 
+<span class="no">15</span> 
+<span class="no">16</span> if __name__ == &quot;__main__&quot;:
+<span class="no">17</span>   unittest.main();
+</pre>
+</div><p>The implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> class CypherMachine:
+<span class="no"> 2</span>   def encrypt(self,key,plain_text):
+<span class="no"> 3</span>     encrypted_text = ''
+<span class="no"> 4</span> 
+<span class="no"> 5</span>     position = 0
+<span class="no"> 6</span>     while position &lt; len(plain_text):
+<span class="no"> 7</span>       for key_letter in key:
+<span class="no"> 8</span>         if position == len(plain_text):
+<span class="no"> 9</span>           break
+<span class="no"><strong>10</strong></span>         encrypted_text = encrypted_text + self.encryptLetter(key_letter,plain_text[position])
+<span class="no">11</span>         position = position + 1
+<span class="no">12</span> 
+<span class="no">13</span>     return encrypted_text
+<span class="no">14</span> 
+<span class="no">15</span>   def encryptLetter(self,key_letter,plain_letter):
+<span class="no">16</span> 
+<span class="no">17</span>     key_position = ord(key_letter)
+<span class="no">18</span>     plain_letter_position = ord(plain_letter)
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>     #96 being the number to bring lower case letters to there position in the alphabet
+<span class="no">21</span>     #-1 since the cyper square starts with b
+<span class="no">22</span>     key_alphabet_position = ord(key_letter) - 96 - 1
+<span class="no">23</span> 
+<span class="no">24</span>     encrypted_position = plain_letter_position + key_alphabet_position
+<span class="no">25</span> 
+<span class="no">26</span>     if encrypted_position &gt; ord('z'):
+<span class="no">27</span>       encrypted_position = encrypted_position - 26
+<span class="no">28</span> 
+<span class="no">29</span>     encrypted_letter = chr(encrypted_position)
+<span class="no"><strong>30</strong></span>     return encrypted_letter
+</pre>
+</div><p>I know it&#8217;s not as neat or as simple as it should be but for an hours work I&#8217;m pretty happy with it. I love that fact that in Python you don&#8217;t waste time typing inconsequential characters like &#8216;{&#8217; and &#8216;;&#8217;. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I&#8217;d written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they&#8217;re both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it&#8217;s just so easy. Import the unittest modules and get on with it. Perfect!</p>
+<p>Maybe if testing in PHP was this easy I&#8217;d get fewer dirty looks when I tell people I&#8217;m a PHP developer.</p></div>
+</div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>

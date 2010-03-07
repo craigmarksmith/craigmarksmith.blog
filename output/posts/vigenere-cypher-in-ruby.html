@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>craigmarksmith.blog</title>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+   <link rel="stylesheet" href="/css/coderay.css" type="text/css" media="screen, projection" />
+   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml" />
+</head>
+<body>
+
+<div class="container">
+  <div id="header">
+    <a href="/"><img src="/images/craigmarksmith_blog.png" /></a>
+  </div>
+  <div id="content"><div class="created_at">01 July 2009</div>
+<h1>Vigenere cypher in ruby</h1>
+<p>Some time ago I implemented the <a href="http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenere</a> as a first look at Python. For some time I&#8217;ve wanted to do the same thing in Ruby and I finally found time.</p>
+<p>The tests:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> require <span class="s"><span class="dl">'</span><span class="k">test/unit</span><span class="dl">'</span></span>
+<span class="no"> 2</span> require <span class="s"><span class="dl">'</span><span class="k">vigenere_cipher</span><span class="dl">'</span></span>
+<span class="no"> 3</span> 
+<span class="no"> 4</span> <span class="r">class</span> <span class="cl">VigenereCipherTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   <span class="r">def</span> <span class="fu">test_should_encrypt_a_string</span>
+<span class="no"> 7</span>     plain_text = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no"> 8</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">LXFOPVEFRNHR</span><span class="dl">'</span></span>;
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">11</span>     encrypted_string = machine.encrypt(<span class="s"><span class="dl">'</span><span class="k">LEMONLEMONLE</span><span class="dl">'</span></span>,plain_text);
+<span class="no">12</span> 
+<span class="no">13</span>     assert_equal expected_result, encrypted_string
+<span class="no">14</span>   <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span>   <span class="r">def</span> <span class="fu">test_should_decrypt_a_string</span>
+<span class="no">17</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no">18</span>     encrypted_message = <span class="s"><span class="dl">'</span><span class="k">LXFOPVEFRNHR</span><span class="dl">'</span></span>;
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">21</span>     encrypted_message = machine.decrypt(<span class="s"><span class="dl">'</span><span class="k">LEMONLEMONLE</span><span class="dl">'</span></span>,encrypted_message);
+<span class="no">22</span> 
+<span class="no">23</span>     assert_equal expected_result, encrypted_message
+<span class="no">24</span>   <span class="r">end</span>
+<span class="no">25</span> 
+<span class="no">26</span>   <span class="r">def</span> <span class="fu">test_should_loop_around_the_key_when_it_is_short_than_the_text</span>
+<span class="no">27</span>     plain_text = <span class="s"><span class="dl">'</span><span class="k">ATTACKATDAWN</span><span class="dl">'</span></span>;
+<span class="no">28</span>     expected_result = <span class="s"><span class="dl">'</span><span class="k">JXLSLOSLMEOF</span><span class="dl">'</span></span>;
+<span class="no">29</span> 
+<span class="no"><strong>30</strong></span>     machine = <span class="co">VigenereCipher</span>.new;
+<span class="no">31</span>     encrypted_string = machine.encrypt(<span class="s"><span class="dl">'</span><span class="k">JESS</span><span class="dl">'</span></span>,plain_text);
+<span class="no">32</span> 
+<span class="no">33</span>     assert_equal expected_result, encrypted_string
+<span class="no">34</span>   <span class="r">end</span>
+<span class="no">35</span> 
+<span class="no">36</span> <span class="r">end</span>
+</pre>
+</div><p>And the implementation:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">VigenereCipher</span>
+<span class="no"> 2</span> 
+<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">encrypt</span>(key, plain_text)
+<span class="no"> 4</span>     transform(key, plain_text, <span class="s"><span class="dl">'</span><span class="k">encrypt</span><span class="dl">'</span></span>)
+<span class="no"> 5</span>   <span class="r">end</span>
+<span class="no"> 6</span> 
+<span class="no"> 7</span>   <span class="r">def</span> <span class="fu">decrypt</span>(key, encrypted_message)
+<span class="no"> 8</span>     transform(key, encrypted_message, <span class="s"><span class="dl">'</span><span class="k">decrypt</span><span class="dl">'</span></span>)
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span> private
+<span class="no">12</span>   <span class="r">def</span> <span class="fu">transform</span>(key, text, method)
+<span class="no">13</span>     n = <span class="i">-1</span>
+<span class="no">14</span>     text.split(<span class="rx"><span class="dl">/</span><span class="dl">/</span></span>).map{|letter| transform_letter(letter, calc_key_letter(key, n+=<span class="i">1</span>), method==<span class="s"><span class="dl">'</span><span class="k">encrypt</span><span class="dl">'</span></span> ? <span class="sy">:+</span> : <span class="sy">:-</span> )}.join
+<span class="no">15</span>   <span class="r">end</span>
+<span class="no">16</span> 
+<span class="no">17</span>   <span class="r">def</span> <span class="fu">transform_letter</span>(letter, key_letter, plus_or_minus)
+<span class="no">18</span>     charset_offset = <span class="s"><span class="dl">&quot;</span><span class="k">A</span><span class="dl">&quot;</span></span>[<span class="i">0</span>]
+<span class="no">19</span>     letter_position = letter[<span class="i">0</span>] - charset_offset
+<span class="no"><strong>20</strong></span>     key_letter_position = key_letter[<span class="i">0</span>]-charset_offset
+<span class="no">21</span> 
+<span class="no">22</span>     letter_shifts_by = letter_position.send(plus_or_minus, key_letter_position)
+<span class="no">23</span>     (letter_shifts_by.modulo(<span class="i">26</span>)+charset_offset).chr
+<span class="no">24</span>   <span class="r">end</span>
+<span class="no">25</span> 
+<span class="no">26</span>   <span class="r">def</span> <span class="fu">calc_key_letter</span>(key, n)
+<span class="no">27</span>     n = n.modulo(key.length)
+<span class="no">28</span>     key.split(<span class="rx"><span class="dl">/</span><span class="dl">/</span></span>)[n]
+<span class="no">29</span>   <span class="r">end</span>
+<span class="no"><strong>30</strong></span> 
+<span class="no">31</span> <span class="r">end</span>
+</pre>
+</div><p>If you&#8217;d like to download the code you can get it from <a href="http://github.com/craigmarksmith/vigenere_cipher/tree/master">my github account</a></p></div>
+  <div id="sideBar">
+    <h3 id="aboutMe">About me:</h3>
+    <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
+    <p>
+      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+    </p>
+    <ul>
+      <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
+      <li><a href="http://github.com/craigmarksmith">Github</a></li>
+    </ul>
+    <h3>Posts</h3>
+    <ul>
+      
+
+              <li><a href="/posts/should-and-when-better-testing-part2.html">Better testing, part 2 - Language in testing</a></li>
+              <li><a href="/posts/why-we-test-better-testing-part1.html">Better testing, part 1 - Why we test</a></li>
+              <li><a href="/posts/vigenere-cypher-in-ruby.html">Vigenere cypher in ruby</a></li>
+              <li><a href="/posts/converting-an-array-of-tuple-to-a-hash.html">Converting an array of tuples to a hash</a></li>
+              <li><a href="/posts/testing-and-generating-html-outside-rails-views.html">Testing and generating HTML outside Rails views</a></li>
+              <li><a href="/posts/the-problem-with-tdd.html">The problem with TDD</a></li>
+              <li><a href="/posts/factory-girl-for-the-win.html">Factory Girl for the win</a></li>
+              <li><a href="/posts/dangers-of-over-mocking.html">The dangers of over mocking</a></li>
+              <li><a href="/posts/interactive-rake.html">Interactive Rake</a></li>
+              <li><a href="/posts/agile-icecream.html">Agile Icecream</a></li>
+              <li><a href="/posts/clarity.html">Clarity</a></li>
+              <li><a href="/posts/a-first-look-at-python.html">A first look at Python</a></li>
+          </ul>
+    <h3>Blogroll</h3>
+    <ul>
+      <li><a href="http://chrisroos.co.uk/">Chris Roos</a></li>
+      <li><a href="http://po-ru.com/">Paul Battley</a></li>
+      <li><a href="http://everythingbehind.com/">Ben Sales</a></li>
+      <li><a href="http://www.lukeredpath.co.uk/">Luke Redpath</a></li>
+      <li><a href="http://interblah.net/">James Adam</a></li>
+      <li><a href="http://blog.floehopper.org/">James Mead</a></li>
+      <li><a href="http://clockworkninja.co.uk/">Tom Lea</a></li>
+      <li><a href="http://www.theshadowaspect.com/">Matt House</a></li>
+    </ul>
+  </div>
+</body>
+</html>
