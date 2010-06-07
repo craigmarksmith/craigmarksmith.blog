@@ -23,13 +23,15 @@
 <div class="CodeRay">
 <pre><span class="no">1</span> person = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
 </pre>
-</div><p>I want to use this data to create an object so my code would be much prettier if I had a hash.</p>
+</div>
+<p>I want to use this data to create an object so my code would be much prettier if I had a hash.</p>
 <p>I thought converting this array of tuples to a hash would be messy but it&#8217;s not. You can create a hash from an array like so.</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> &gt;&gt; <span class="co">Hash</span>[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]
 <span class="no">2</span> =&gt; {<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>}
 </pre>
-</div><p>Now that we know that, we can create a hash from an array of tuples.</p>
+</div>
+<p>Now that we know that, we can create a hash from an array of tuples.</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> &gt;&gt; tuples = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
 <span class="no">2</span> =&gt; [[<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>], [<span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>]]
@@ -41,7 +43,7 @@
     <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
     <p>
-      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+      I'm Craig Smith, a freelance software developer based in Sydney.
     </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>

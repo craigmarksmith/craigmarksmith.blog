@@ -56,7 +56,8 @@
 <span class="no"><strong>30</strong></span> <span class="r">end</span>
 <span class="no">31</span> 
 </pre>
-</div><p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
+</div>
+<p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
 <p>But what does &#8220;working&#8221; mean?</p>
 <p>The second test clears that confusion up. By adding the word &#8220;should&#8221; into the name of the test case, we&#8217;re forcing ourselves to think about what we actually want the function to do before coding it.</p>
 <p>The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.</p>
@@ -93,7 +94,8 @@
 <span class="no">28</span> <span class="r">end</span>
 <span class="no">29</span> 
 </pre>
-</div><p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
+</div>
+<p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> 
 <span class="no"> 2</span> <span class="r">class</span> <span class="cl">WhenItemsHaveBeenAddedToTheBasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
@@ -120,13 +122,14 @@
 <span class="no">23</span> <span class="r">end</span>
 <span class="no">24</span> 
 </pre>
-</div><p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
+</div>
+<p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
 <p>A great way of getting started with this kind of testing is by using <a href="http://github.com/thoughtbot/shoulda">shoulda</a> thoughtbots excellent extension to TestUnit.</p></div>
   <div id="sideBar">
     <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
     <p>
-      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+      I'm Craig Smith, a freelance software developer based in Sydney.
     </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>

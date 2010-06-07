@@ -59,7 +59,8 @@
 <span class="no"><strong>30</strong></span> <span class="r">end</span>
 <span class="no">31</span> 
 </pre>
-</div><p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
+</div>
+<p>As I&#8217;ve done here, it&#8217;s pretty common to name your test after the function you&#8217;re testing, so test_individual_items tests that the individual items function is &#8220;working&#8221;.</p>
 <p>But what does &#8220;working&#8221; mean?</p>
 <p>The second test clears that confusion up. By adding the word &#8220;should&#8221; into the name of the test case, we&#8217;re forcing ourselves to think about what we actually want the function to do before coding it.</p>
 <p>The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.</p>
@@ -96,7 +97,8 @@
 <span class="no">28</span> <span class="r">end</span>
 <span class="no">29</span> 
 </pre>
-</div><p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
+</div>
+<p>These test names are getting too long and there&#8217;s some pretty obvious duplication going on. Here comes &#8220;When&#8221; to help out.</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> 
 <span class="no"> 2</span> <span class="r">class</span> <span class="cl">WhenItemsHaveBeenAddedToTheBasketTest</span> &lt; <span class="co">Test</span>::<span class="co">Unit</span>::<span class="co">TestCase</span>
@@ -123,7 +125,8 @@
 <span class="no">23</span> <span class="r">end</span>
 <span class="no">24</span> 
 </pre>
-</div><p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
+</div>
+<p>So, using the words When and Should can help your tests and implementation become more readable and more maintainable.</p>
 <p>A great way of getting started with this kind of testing is by using <a href="http://github.com/thoughtbot/shoulda">shoulda</a> thoughtbots excellent extension to TestUnit.</p></div>
   <div class="post"><div class="created_at">16 November 2009</div>
 <h1>Better testing, part 1 &#8211; Why we test</h1>
@@ -201,7 +204,8 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no">35</span> 
 <span class="no">36</span> <span class="r">end</span>
 </pre>
-</div><p>And the implementation:</p>
+</div>
+<p>And the implementation:</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">VigenereCipher</span>
 <span class="no"> 2</span> 
@@ -235,20 +239,23 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no"><strong>30</strong></span> 
 <span class="no">31</span> <span class="r">end</span>
 </pre>
-</div><p>If you&#8217;d like to download the code you can get it from <a href="http://github.com/craigmarksmith/vigenere_cipher/tree/master">my github account</a></p></div>
+</div>
+<p>If you&#8217;d like to download the code you can get it from <a href="http://github.com/craigmarksmith/vigenere_cipher/tree/master">my github account</a></p></div>
   <div class="post"><div class="created_at">23 June 2009</div>
 <h1>Converting an array of tuples to a hash</h1>
 <p>I was working with a class today that gave me an array of tuples:</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> person = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
 </pre>
-</div><p>I want to use this data to create an object so my code would be much prettier if I had a hash.</p>
+</div>
+<p>I want to use this data to create an object so my code would be much prettier if I had a hash.</p>
 <p>I thought converting this array of tuples to a hash would be messy but it&#8217;s not. You can create a hash from an array like so.</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> &gt;&gt; <span class="co">Hash</span>[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]
 <span class="no">2</span> =&gt; {<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>}
 </pre>
-</div><p>Now that we know that, we can create a hash from an array of tuples.</p>
+</div>
+<p>Now that we know that, we can create a hash from an array of tuples.</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> &gt;&gt; tuples = [[<span class="s"><span class="dl">'</span><span class="k">name</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">craig</span><span class="dl">'</span></span>],[<span class="s"><span class="dl">'</span><span class="k">likes</span><span class="dl">'</span></span>,<span class="s"><span class="dl">'</span><span class="k">climbing</span><span class="dl">'</span></span>]]
 <span class="no">2</span> =&gt; [[<span class="s"><span class="dl">&quot;</span><span class="k">name</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">craig</span><span class="dl">&quot;</span></span>], [<span class="s"><span class="dl">&quot;</span><span class="k">likes</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">climbing</span><span class="dl">&quot;</span></span>]]
@@ -276,7 +283,8 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no">12</span> <span class="r">end</span>
 <span class="no">13</span> 
 </pre>
-</div><p>Because we&#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&#8217;s really important to us.</p>
+</div>
+<p>Because we&#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&#8217;s really important to us.</p>
 <p>Now the implementation:</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> 
@@ -292,7 +300,8 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no">11</span> <span class="r">end</span>
 <span class="no">12</span> 
 </pre>
-</div><p>and the erb file:</p>
+</div>
+<p>and the erb file:</p>
 <div class="CodeRay">
 <pre><span class="no">1</span> 
 <span class="no">2</span> &lt;div id='problem_name'&gt;&lt;%= @product.name %&gt;&lt;/div&gt;
@@ -330,7 +339,8 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no">12</span>   <span class="r">end</span>
 <span class="no">13</span> <span class="r">end</span>
 </pre>
-</div><p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
+</div>
+<p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
 <p>Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">Mother</span>
@@ -353,7 +363,8 @@ Boss: &#8220;It&#8217;d better be&#8221;</p>
 <span class="no">18</span>   <span class="r">end</span>
 <span class="no">19</span> <span class="r">end</span>
 </pre>
-</div><p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
+</div>
+<p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
 <p>Option 1) Pass the unique parts into the Mother &#8211; <em>but that&#8217;ll pollute the test with irrelevant data again.</em><br />
 Option 2) Modify the Mother to dynamically create values for all the unique attributes<br />
 Option 3) Use something that already does Option 2 and a whole load of other things</p>
@@ -384,7 +395,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 <span class="no">23</span>   <span class="r">end</span>
 <span class="no">24</span> <span class="r">end</span>
 </pre>
-</div><p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
+</div>
+<p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
   <div class="post"><div class="created_at">05 May 2009</div>
 <h1>The dangers of over mocking</h1>
 <p><a href="http://martinfowler.com/articles/mocksArentStubs.html#ClassicalAndMockistTesting">Classicist vs Mockist</a> approach to <a href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a> is a classic and ongoing debate in the software community.</p>
@@ -401,7 +413,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 <span class="no">7</span>   <span class="r">end</span>
 <span class="no">8</span> <span class="r">end</span>
 </pre>
-</div><p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
+</div>
+<p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
 <p>Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(</p>
 <h3>The Classicists solution</h3>
 <div class="CodeRay">
@@ -414,7 +427,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 <span class="no">7</span>   <span class="r">end</span>
 <span class="no">8</span> <span class="r">end</span>
 </pre>
-</div><p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
+</div>
+<p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
   <div class="post"><div class="created_at">30 April 2009</div>
 <h1>Interactive Rake</h1>
 <p>I often find myself using <code>rake -T</code>. I always have a vague idea of the name of the Rake task I&#8217;d like to run but often tasks with long names slip my mind. I&#8217;m also incredibly lazy and don&#8217;t want to type the entire name of the task if I don&#8217;t have to.<br />
@@ -429,7 +443,8 @@ That&#8217;s why I decided I needed Interactive Rake. The ability to search thou
 <span class="no">6</span> 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
 <span class="no">7</span> Choose a task: 3
 </pre>
-</div><p>Sadly Jim Weirich is being elusive so I&#8217;m having trouble getting my fork merged back in to the trunk. If you&#8217;d like to use Interactive Rake it&#8217;s hosted at <a href="http://github.com/craigmarksmith/rake">github.com/craigmarksmith/rake</a></p></div>
+</div>
+<p>Sadly Jim Weirich is being elusive so I&#8217;m having trouble getting my fork merged back in to the trunk. If you&#8217;d like to use Interactive Rake it&#8217;s hosted at <a href="http://github.com/craigmarksmith/rake">github.com/craigmarksmith/rake</a></p></div>
   <div class="post"><div class="created_at">03 July 2008</div>
 <h1>Agile Icecream</h1>
 <p><img src="/images/posts/icecream.jpg" alt="icecream" title="Agile Icecream"></p>
@@ -483,7 +498,8 @@ It&#8217;s during this fourth rewrite that I had my most recent &#8216;attack&#8
 <span class="no">16</span> if __name__ == &quot;__main__&quot;:
 <span class="no">17</span>   unittest.main();
 </pre>
-</div><p>The implementation:</p>
+</div>
+<p>The implementation:</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> class CypherMachine:
 <span class="no"> 2</span>   def encrypt(self,key,plain_text):
@@ -516,14 +532,15 @@ It&#8217;s during this fourth rewrite that I had my most recent &#8216;attack&#8
 <span class="no">29</span>     encrypted_letter = chr(encrypted_position)
 <span class="no"><strong>30</strong></span>     return encrypted_letter
 </pre>
-</div><p>I know it&#8217;s not as neat or as simple as it should be but for an hours work I&#8217;m pretty happy with it. I love that fact that in Python you don&#8217;t waste time typing inconsequential characters like &#8216;{&#8217; and &#8216;;&#8217;. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I&#8217;d written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they&#8217;re both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it&#8217;s just so easy. Import the unittest modules and get on with it. Perfect!</p>
+</div>
+<p>I know it&#8217;s not as neat or as simple as it should be but for an hours work I&#8217;m pretty happy with it. I love that fact that in Python you don&#8217;t waste time typing inconsequential characters like &#8216;{&#8217; and &#8216;;&#8217;. I also like the fact that the parser makes you indent your code properly. But the best thing about Python is how easy it was to test. If I&#8217;d written this class in PHP I would have had to downloaded Simpletest or PHPUnit, read a little about how they work (to be fair, they&#8217;re both easy to use), find and included the files I wanted, then get on with the job of coding. With Python it&#8217;s just so easy. Import the unittest modules and get on with it. Perfect!</p>
 <p>Maybe if testing in PHP was this easy I&#8217;d get fewer dirty looks when I tell people I&#8217;m a PHP developer.</p></div>
 </div>
   <div id="sideBar">
     <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
     <p>
-      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+      I'm Craig Smith, a freelance software developer based in Sydney.
     </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>

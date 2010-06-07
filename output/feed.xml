@@ -5,7 +5,7 @@
   <subtitle>craigmarksmith tech blog</subtitle>
   <link href="http://craigmarksmith.co.uk/feed.xml" rel="self" />
   <link href="http://craigmarksmith.co.uk/" />
-  <updated>2010-03-07T18:09:07+00:00</updated>
+  <updated>2010-06-07T23:34:19+01:00</updated>
   <author>
     <name>Craig Smith</name>
   </author>
@@ -55,7 +55,8 @@
 &lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;31&lt;/span&gt; 
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;As I&amp;#8217;ve done here, it&amp;#8217;s pretty common to name your test after the function you&amp;#8217;re testing, so test_individual_items tests that the individual items function is &amp;#8220;working&amp;#8221;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;As I&amp;#8217;ve done here, it&amp;#8217;s pretty common to name your test after the function you&amp;#8217;re testing, so test_individual_items tests that the individual items function is &amp;#8220;working&amp;#8221;.&lt;/p&gt;
 &lt;p&gt;But what does &amp;#8220;working&amp;#8221; mean?&lt;/p&gt;
 &lt;p&gt;The second test clears that confusion up. By adding the word &amp;#8220;should&amp;#8221; into the name of the test case, we&amp;#8217;re forcing ourselves to think about what we actually want the function to do before coding it.&lt;/p&gt;
 &lt;p&gt;The second test also has a desirable side effect. By thinking about what the function should do and by writing that down with the word should it highlights that our original function, individual_items, is badly named, and a better name would be distinct_items.&lt;/p&gt;
@@ -92,7 +93,8 @@
 &lt;span class=&quot;no&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;29&lt;/span&gt; 
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;These test names are getting too long and there&amp;#8217;s some pretty obvious duplication going on. Here comes &amp;#8220;When&amp;#8221; to help out.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;These test names are getting too long and there&amp;#8217;s some pretty obvious duplication going on. Here comes &amp;#8220;When&amp;#8221; to help out.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;WhenItemsHaveBeenAddedToTheBasketTest&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;Test&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Unit&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TestCase&lt;/span&gt;
@@ -119,7 +121,8 @@
 &lt;span class=&quot;no&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; 
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;So, using the words When and Should can help your tests and implementation become more readable and more maintainable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;So, using the words When and Should can help your tests and implementation become more readable and more maintainable.&lt;/p&gt;
 &lt;p&gt;A great way of getting started with this kind of testing is by using &lt;a href=&quot;http://github.com/thoughtbot/shoulda&quot;&gt;shoulda&lt;/a&gt; thoughtbots excellent extension to TestUnit.&lt;/p&gt;</content>
   </entry>
   
@@ -211,7 +214,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;35&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;36&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;And the implementation:&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;And the implementation:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;VigenereCipher&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; 
@@ -245,7 +249,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;31&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;If you&amp;#8217;d like to download the code you can get it from &lt;a href=&quot;http://github.com/craigmarksmith/vigenere_cipher/tree/master&quot;&gt;my github account&lt;/a&gt;&lt;/p&gt;</content>
+&lt;/div&gt;
+&lt;p&gt;If you&amp;#8217;d like to download the code you can get it from &lt;a href=&quot;http://github.com/craigmarksmith/vigenere_cipher/tree/master&quot;&gt;my github account&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -259,13 +264,15 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; person = [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;],[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]]
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;I want to use this data to create an object so my code would be much prettier if I had a hash.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;I want to use this data to create an object so my code would be much prettier if I had a hash.&lt;/p&gt;
 &lt;p&gt;I thought converting this array of tuples to a hash would be messy but it&amp;#8217;s not. You can create a hash from an array like so.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&quot;co&quot;&gt;Hash&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; =&amp;gt; {&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;=&amp;gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;}
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Now that we know that, we can create a hash from an array of tuples.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now that we know that, we can create a hash from an array of tuples.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &amp;gt;&amp;gt; tuples = [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;],[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]]
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; =&amp;gt; [[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;craig&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;], [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;likes&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;climbing&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]]
@@ -300,7 +307,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; 
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Because we&amp;#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&amp;#8217;s really important to us.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Because we&amp;#8217;re passing the HTML snippet in to assert_select we can assert our HTML markup in the same way we would in a controller or integration test, meaning we can test the markup that&amp;#8217;s really important to us.&lt;/p&gt;
 &lt;p&gt;Now the implementation:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; 
@@ -316,7 +324,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; 
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;and the erb file:&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;and the erb file:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; &amp;lt;div id='problem_name'&amp;gt;&amp;lt;%= @product.name %&amp;gt;&amp;lt;/div&amp;gt;
@@ -368,7 +377,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&amp;#8217;t need to do it in this clunky, verbose way. Enter the &lt;a href=&quot;http://martinfowler.com/bliki/ObjectMother.html&quot;&gt;Object Mother&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&amp;#8217;t need to do it in this clunky, verbose way. Enter the &lt;a href=&quot;http://martinfowler.com/bliki/ObjectMother.html&quot;&gt;Object Mother&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
 &lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Mother&lt;/span&gt;
@@ -391,7 +401,8 @@ Boss: &amp;#8220;It&amp;#8217;d better be&amp;#8221;&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&amp;#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&amp;#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.&lt;/p&gt;
 &lt;p&gt;Option 1) Pass the unique parts into the Mother &amp;#8211; &lt;em&gt;but that&amp;#8217;ll pollute the test with irrelevant data again.&lt;/em&gt;&lt;br /&gt;
 Option 2) Modify the Mother to dynamically create values for all the unique attributes&lt;br /&gt;
 Option 3) Use something that already does Option 2 and a whole load of other things&lt;/p&gt;
@@ -422,7 +433,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 &lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.&lt;/p&gt;</content>
+&lt;/div&gt;
+&lt;p&gt;Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -446,7 +458,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;In the test above we want to make sure that the controller shows the price on the product page. We don&amp;#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the test above we want to make sure that the controller shows the price on the product page. We don&amp;#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.&lt;/p&gt;
 &lt;p&gt;Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&amp;#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(&lt;/p&gt;
 &lt;h3&gt;The Classicists solution&lt;/h3&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
@@ -459,7 +472,8 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.&lt;/p&gt;</content>
+&lt;/div&gt;
+&lt;p&gt;Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -481,7 +495,8 @@ That&amp;#8217;s why I decided I needed Interactive Rake. The ability to search 
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; 3) rake tmp:create          # Creates tmp directories for sessions, cache, sockets, and pids
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; Choose a task: 3
 &lt;/pre&gt;
-&lt;/div&gt;&lt;p&gt;Sadly Jim Weirich is being elusive so I&amp;#8217;m having trouble getting my fork merged back in to the trunk. If you&amp;#8217;d like to use Interactive Rake it&amp;#8217;s hosted at &lt;a href=&quot;http://github.com/craigmarksmith/rake&quot;&gt;github.com/craigmarksmith/rake&lt;/a&gt;&lt;/p&gt;</content>
+&lt;/div&gt;
+&lt;p&gt;Sadly Jim Weirich is being elusive so I&amp;#8217;m having trouble getting my fork merged back in to the trunk. If you&amp;#8217;d like to use Interactive Rake it&amp;#8217;s hosted at &lt;a href=&quot;http://github.com/craigmarksmith/rake&quot;&gt;github.com/craigmarksmith/rake&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
   
   <entry>

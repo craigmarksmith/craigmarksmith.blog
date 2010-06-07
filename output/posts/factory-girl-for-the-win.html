@@ -36,7 +36,8 @@
 <span class="no">12</span>   <span class="r">end</span>
 <span class="no">13</span> <span class="r">end</span>
 </pre>
-</div><p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
+</div>
+<p>In the test above we only care about the price and the sku of the product, having all these other attributes is messy but a valid Product requires all of them. It is necessary to create a valid object but we don&#8217;t need to do it in this clunky, verbose way. Enter the <a href="http://martinfowler.com/bliki/ObjectMother.html">Object Mother</a></p>
 <p>Essentially the Object Mother is just a factory for creating test objects that allows use to concentrate on the attributes we care about in the test.</p>
 <div class="CodeRay">
 <pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">Mother</span>
@@ -59,7 +60,8 @@
 <span class="no">18</span>   <span class="r">end</span>
 <span class="no">19</span> <span class="r">end</span>
 </pre>
-</div><p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
+</div>
+<p>Mission accomplished, the test is much more succinct because the data we created in the test is relevant to that test. But that&#8217;s not the end of the story. The example above is very simple, what if in our test we wanted 2 or more products and a valid product has unique EANs and SKUs.</p>
 <p>Option 1) Pass the unique parts into the Mother &#8211; <em>but that&#8217;ll pollute the test with irrelevant data again.</em><br />
 Option 2) Modify the Mother to dynamically create values for all the unique attributes<br />
 Option 3) Use something that already does Option 2 and a whole load of other things</p>
@@ -90,12 +92,13 @@ Option 3) Use something that already does Option 2 and a whole load of other thi
 <span class="no">23</span>   <span class="r">end</span>
 <span class="no">24</span> <span class="r">end</span>
 </pre>
-</div><p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
+</div>
+<p>Not only does Factory Girl do the job of make the test readable and relevant, it also handles sequences (like the ean and sku values), associates and more.</p></div>
   <div id="sideBar">
     <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
     <p>
-      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+      I'm Craig Smith, a freelance software developer based in Sydney.
     </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>

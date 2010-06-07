@@ -33,7 +33,8 @@
 <span class="no">7</span>   <span class="r">end</span>
 <span class="no">8</span> <span class="r">end</span>
 </pre>
-</div><p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
+</div>
+<p>In the test above we want to make sure that the controller shows the price on the product page. We don&#8217;t want to test ActiveRecord functionality so we stub out find_by_product_code. We implement the controller to use find by product code and our test passes. Great! Well not really.</p>
 <p>Six month later another developer is refactoring. Everyone in the whole business refers to product_code as SKU, and all the developers keep getting confused so a rename is in order. One quick migration later, the rename is done and the test suit is running. Sadly our test above won&#8217;t fail, even though the column is gone leaving us with a meaningless test and broken code :(</p>
 <h3>The Classicists solution</h3>
 <div class="CodeRay">
@@ -46,12 +47,13 @@
 <span class="no">7</span>   <span class="r">end</span>
 <span class="no">8</span> <span class="r">end</span>
 </pre>
-</div><p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
+</div>
+<p>Actually creating the object instead of mocks prevents your test being tied to your implementation and in the mockist case above, hiding potential errors.</p></div>
   <div id="sideBar">
     <h3 id="aboutMe">About me:</h3>
     <img id="gravitar" src="http://www.gravatar.com/avatar/88922baa3493792a6596c4ca979a332a.jpg" />
     <p>
-      I'm a software developer working mainly in Ruby. I live in London and am employed by <a href="http://reevoo.com">Reevoo</a>.
+      I'm Craig Smith, a freelance software developer based in Sydney.
     </p>
     <ul>
       <li><a href="http://twitter.com/craigmarksmith">Twitter</a></li>
